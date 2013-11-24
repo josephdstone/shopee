@@ -19,28 +19,35 @@
     </head>
 
     <body>
-        <H1 style="color:#B80000">Scan Your Item</H1>
+        <H1 style="color:#B80000">Shoppee List</H1>
+        <H4 style="color:#B80000">Scan You Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
         
         <br>
         <br>
-        <button class="button" id="btnScan">Scan</button>
-        <a id="btnBack" data-role="button" href="modeSelect.html"
-           data-icon="home" data-iconpos="right">
+        <a style="margin-right:10%;margin-left:10%;" data-role="button" data-icon="plus" data-iconpos="right" id="btnScan" data-theme="b">Scan Product</a>
+        <a style="margin-right:10%;margin-left:10%;" id="btnBack" data-role="button" href="modeSelect.html"
+           data-icon="back" data-iconpos="right" data-transition="slide" data-theme="b">
             Previous Page
         </a>
-        <a id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
-           data-icon="delete" data-iconpos="right">
+        <a style="margin-right:10%;margin-left:10%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
+           data-icon="delete" data-iconpos="right" data-theme="b">
             Clear Shopping List
         </a>
         <br>
+        <div style="margin-right:10%;margin-left:10%;" data-role="collapsible" data-theme="b" data-content-theme="b">
+           <h3>Manual Options</h3>
+            <p>
+                    
         <label>Grocery Item</label>
             <input style="text-align:center" id="groceryItem" value="" data-mini="false" type="text">
             <br>
-        <a id="btnAddGrocery" data-role="button" onClick="manualAdd()"
-           data-icon="plus" data-iconpos="right">
-            Add Grocery Item
+        <a style="margin-right:10%;margin-left:10%;" id="btnAddGrocery" data-role="button" onClick="manualAdd()"
+           data-icon="plus" data-iconpos="right" data-theme="b">
+            Add Item
         </a>
+                    </p>
+            </div>
         <br>
         <h3>Shoppee List</h3>
         <ul data-role="listview">
@@ -55,7 +62,6 @@
 			}
         </style>
         <script>
-            
             var totalScanned = -0;
             var taxRate = -0;
             var grandTotal = -0;
@@ -75,11 +81,16 @@
             
             function manualAdd()
             {
+            if ($("#groceryItem").val() != "")
+               {
                 counter += 1;
                 var grocery = $("#groceryItem").val();
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+grocery+"</a></li>");
                 $('#results').listview('refresh'); 
                 $("#groceryItem").val("");
+                }
+                   else 
+                   alert("Please enter an item.");
             }
             
             $("#btnScan").click(function () 
@@ -98,9 +109,14 @@
                                 'datatype':"json",
   				              'success': function(data) 
                                     {
+                                        if (data != "")
+                                        {
                                         counter += 1;
                                         $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+data.item_name+"</a></li>");
                                         $('#results').listview('refresh'); 
+                                        }
+                                        else
+                                        alert("Item not found, please use Manual Options to add to your Shoppee List.");
                                     },
                                 'error':function(data)
                                     {
