@@ -18,7 +18,8 @@
         <title>Scan Your Item</title>
     </head>
 
-    <body><H1 style="color:#B80000">Shoppee Mode</H1>
+    <body>
+        <H1 style="color:#B80000">Shoppee Mode</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
         <br>
@@ -33,10 +34,6 @@
             Clear Cart
         </a>
         
-        <a style="margin-right:10%;margin-left:10%;" id="btnGetList" data-role="button" onClick="populateList()" href=""
-           data-icon="delete" data-iconpos="right" data-theme="b">
-            Clear Cart
-        </a>
         <label>Tax Rate %</label>
             <input style="text-align:center;"  id="tax" value="" placeholder="Optional" type="number" data-mini="false">
         <br>
@@ -59,12 +56,12 @@
                 </p>
 			</div>
         
-        <div style="margin-right:10%;margin-left:10%;" data-role="collapsible" data-theme="b" data-content-theme="b">
+        <div id="coll" style="margin-right:10%;margin-left:10%;" data-role="collapsible" data-theme="b" data-content-theme="b">
             	<h3>Shopping List</h3>
                 
 				<p>
                     <ul data-role="listview">
-                        <li id="shoppingListScan" data-role="listview" data-theme="b"></li>
+                        <li style="margin-left:15%" id="shoppingList" data-role="listview" data-theme="b"></li>
 	                </ul>
                     
                 </p>
@@ -96,6 +93,42 @@
             var grandTotal = -0;
             var counter = -0;
             var subtract = -0;
+            var Counter2 = -0;
+            $( "#coll" ).collapsible(
+            {
+                   create: function(event, ui) 
+            {
+                populateList();
+            }
+            });
+            function populateList()
+            {
+                $.ajax({
+                                'async':false,
+                                'type': "GET",
+                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/getgrocerylist",
+                                'datatype':"json",
+  				              'success': function(data) 
+                                    {
+                                        if (data != "")
+                                        {
+                                            Counter2 += 1;
+                                            
+                                             $("#shoppingList").append("<li data-icon='minus' id="+Counter2+" onclick='deleteListItem("+Counter2+")', "+Counter2+");'><a style='color:white'>"+data[0].productName+"</a></li>");
+                                             //$('#shoppingList').listview('refresh'); 
+                                            
+                                        }
+                                        else
+                                        alert("Product not found, please use manual options to enter item.");
+                                     
+                                    },
+                                'error':function(data)
+                                    {
+                                        alert("Oops, sorry about that! Something happened, please try again!.");
+                        
+                                    }
+                                })
+            }
             
             function clearShoppeeCart()
              {
@@ -107,7 +140,7 @@
                 grandTotal = 0;
             	counter = 0;
             }
-            
+                                                        
             function manAdd()
             {
             if (document.getElementById('manPrice').value != "")
@@ -145,10 +178,10 @@
                 $("#" + counter).remove();
             }
             
-            function deleteShoppingItem(listCounter)
+            function deleteListItem(id)
             {
-               
-                $("#" + listCounter).remove();
+               alert(id);
+                $("#" + id).remove();
             }
                 
             $("#btnScan").click(function () 
