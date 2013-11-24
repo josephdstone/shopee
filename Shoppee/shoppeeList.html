@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="jquery-mobile/styles/jquery.mobile-1.3.1.min.css" rel="stylesheet" />
+        <link href="styles/main.css" rel="stylesheet" />
+
+        <script src="cordova.js" type="text/javascript"></script>
+        <script src="jquery-mobile/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="jquery-mobile/js/jquery.mobile-1.3.1.min.js" type="text/javascript"></script>
+
+        <script src="scripts/login.js" type="text/javascript"></script>
+        <script src="scripts/location.js" type="text/javascript"></script>
+        <script src="Plugins/com.phonegap.plugins.barcodescanner-0.7.0/www/barcodescanner.js"></script>
+        <title>Shoppee Cart</title>
+    </head>
+
+    <body>
+        <H1 style="color:#B80000">Scan Your Item</H1>
+        <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
+        
+        <br>
+        <br>
+        <button class="button" id="btnScan">Scan</button>
+        <a id="btnBack" data-role="button" href="modeSelect.html"
+           data-icon="home" data-iconpos="right">
+            Previous Page
+        </a>
+        <a id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
+           data-icon="delete" data-iconpos="right">
+            Clear Shopping List
+        </a>
+        <br>
+        <label>Grocery Item</label>
+            <input style="text-align:center" id="groceryItem" value="" data-mini="false" type="text">
+            <br>
+        <a id="btnAddGrocery" data-role="button" onClick="manualAdd()"
+           data-icon="plus" data-iconpos="right">
+            Add Grocery Item
+        </a>
+        <br>
+        <h3>Shoppee List</h3>
+        <ul data-role="listview">
+            <li id="results" data-role="listview" data-theme="b"></li>
+	    </ul>
+        
+        <style>
+        ul
+            {
+    			width: 100%;
+    			margin-left: -40px;
+			}
+        </style>
+        <script>
+            
+            var totalScanned = -0;
+            var taxRate = -0;
+            var grandTotal = -0;
+            var counter = -0;
+            var subtract = -0;
+            
+            function clearShoppeeList()
+            {
+                $("#results").html("").add();
+            	counter = 0;
+            }
+            
+            function deleteItem(id)
+            {
+                $("#" + id).remove();
+            }
+            
+            function manualAdd()
+            {
+                counter += 1;
+                var grocery = $("#groceryItem").val();
+                $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+grocery+"</a></li>");
+                $('#results').listview('refresh'); 
+                $("#groceryItem").val("");
+            }
+            
+            $("#btnScan").click(function () 
+                {          
+                window.plugins.barcodeScanner.scan
+                (
+                    function(result) 
+                    {	
+                        if (!result.cancelled) 
+                        {
+                            $.ajax
+                            ({
+                                'async':false,
+                                'type': "GET",
+                                'url': "https://api.nutritionix.com/v1_1/item?upc="+result.text+"&appId=6dd9a013&appKey=2f130ac4bb1d8caac032e7a0e426ead9",
+                                'datatype':"json",
+  				              'success': function(data) 
+                                    {
+                                        counter += 1;
+                                        $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+data.item_name+"</a></li>");
+                                        $('#results').listview('refresh'); 
+                                    },
+                                'error':function(data)
+                                    {
+                                        alert("error");
+                        
+                                    }
+                 })
+                        }
+                    })
+            });
+            
+            
+            
+                   
+        </script>
+    
+    </body>
+</html>
