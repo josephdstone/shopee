@@ -25,29 +25,55 @@
         
         <br>
         <br>
-        <a style="margin-right:10%;margin-left:10%;" data-role="button" data-icon="plus" data-iconpos="right" id="btnScan" data-theme="b">Scan Product</a>
-        <a style="margin-right:10%;margin-left:10%;" id="btnBack" data-role="button" href="modeSelect.html"
+        <a style="margin-right:5%;margin-left:5%;" data-role="button" data-icon="plus" data-iconpos="right" id="btnScan" data-theme="b">Scan Product</a>
+        <a style="margin-right:5%;margin-left:5%;" id="btnBack" data-role="button" href="modeSelect.html"
            data-icon="back" data-iconpos="right" data-transition="slide" data-theme="b">
             Previous Page
         </a>
-        <a style="margin-right:10%;margin-left:10%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
+        <a style="margin-right:5%;margin-left:5%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
            data-icon="delete" data-iconpos="right" data-theme="b">
             Clear Shopping List
         </a>
         <br>
-        <div style="margin-right:10%;margin-left:10%;" data-role="collapsible" data-theme="b" data-content-theme="b">
+        <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="b" data-content-theme="b">
            <h3>Manual Options</h3>
             <p>
                     
         <label>Grocery Item</label>
             <input style="text-align:center" id="groceryItem" value="" data-mini="false" type="text">
             <br>
-        <a style="margin-right:10%;margin-left:10%;" id="btnAddGrocery" data-role="button" onClick="manualAdd()"
+        <a style="margin-right:5%;margin-left:5%;" id="btnAddGrocery" data-role="button" onClick="manualAdd()"
            data-icon="plus" data-iconpos="right" data-theme="b">
             Add Item
         </a>
                     </p>
             </div>
+        
+    <ul style="margin-left:-25px; padding-right:25px; width:90%" data-theme="b" data-role="collapsible">
+	<h3 style="text-align:center;" data-theme="b">Recipe Search</h3>
+	<p>
+            <input style="text-align:center" id="recipeSearch" placeholder="Enter Dish" data-mini="false" type="text">
+            <br>
+        <a style="margin-right:5%;margin-left:5%;" id="btnAddGrocery" data-role="button" onClick="ajaxRecipeSearch()"
+           data-icon="search" data-iconpos="right" data-theme="b">
+            Search Recipes
+        </a>
+    </p>
+	</ul>    
+	
+	<ul style="margin-left:-25px; padding-right:25px; width:90%" data-theme="b" data-role="collapsible">
+	<h3 style="text-align:center;" data-theme="b">Recipe Results</h3>
+	<p>
+        <ul style="width:110%"data-role="listview">
+            <li id="recipeList" data-role="listview" data-theme="b"></li>        
+    </ul>
+    </p>
+	</ul>
+	
+  
+        
+            
+        
         <br>
         <h3>Shoppee List</h3>
         <ul data-role="listview">
@@ -66,6 +92,7 @@
             var taxRate = -0;
             var grandTotal = -0;
             var counter = -0;
+            var reccounter = -0;
             var subtract = -0;
             window.onload = populateList();
             function populateList()
@@ -77,13 +104,16 @@
                                 'datatype':"json",
   				              'success': function(data) 
                                     {
+                                        counter+=1;
+                                        //$("#recipeList").append("<li data-icon='plus' id="+Counter+" onclick='deleteListItem("+Counter+")', "+Counter+");'><a id='alist"+Counter+"' style='color:white'>data 1</a></li>");
                                         if (data != "")
                                         {
                                             var groceryList = data;
                                             for (var i = 0; i < groceryList.length; i++) 
                                                 {
                                                   counter += 1;
-                                                  $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a id='alist"+counter+"'style='color:white'>"+data[i].productName+"</a></li>");
+                                                  $("#results").append("<li data-role='listview' data-theme='b' data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a id='alist"+counter+"'style='color:white'>"+data[i].productName+"</a></li>");
+
                                                 }                                            
                                         }
                                         
@@ -97,6 +127,38 @@
                                 })
             }
             
+            function ajaxRecipeSearch()
+            {
+             $.ajax({
+                                'async':false,
+                                'type': "GET",
+                                'url': "http://api.yummly.com/v1/api/recipes?_app_id=8fbb7e89&_app_key=f1d5e9fc297940a7033af5b98382c75d&q="+$("#recipeSearch").val(),
+                                'datatype':"json",
+  				              'success': function(data) 
+                                    {
+
+                                        if (data != "")
+                                        {
+                                        //alert(data.matches[0].recipeName);
+                                            //alert(data.matches.length);
+                                            for (var i = 0; i < data.matches.length; i++) 
+                                                {   
+                                                    reccounter += 1;
+                                                   $("#recipeList").append("<li data-role='listview' data-icon='plus' id="+reccounter+" onclick='deleteListItem(rli"+reccounter+")', "+reccounter+");'><a id='rlist"+reccounter+"'>"+data.matches[i].recipeName+"</a></li>");
+
+                                                }                                            
+                                        }
+                                        ec
+                                     
+                                    },
+                                'error':function(data)
+                                    {
+                                        alert("Oops, sorry about that! Something happened, please try again!.");
+                        
+                                    }
+                                })                               
+            }
+                                        
             function clearShoppeeList()
             {
                 $("#results").html("").add();
@@ -200,6 +262,7 @@
                                         }
                                         else
                                         alert("Item not found, please use Manual Options to add to your Shoppee List.");
+                                
                                         
                             $.ajax({
                                 'async':false,
@@ -221,7 +284,7 @@
                                     },
                                 'error':function(data)
                                     {
-                                        alert("error");
+                                        alert("Product not found, please use manual options to enter item.");
                         
                                     }
                                 
