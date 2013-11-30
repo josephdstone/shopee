@@ -113,19 +113,32 @@
             window.onload = populateList();
             function populateList()
             {
-              strcounter = localStorage.getItem('counter');
-              
-                if (strcounter != null)
+              counter = localStorage.getItem('counter')*1;
+              var count = -0;
+                if (counter != null || counter != 0)
                     {
-                        counter = parseInt(strcounter);
                         for (var i = 0; i < counter; i++) 
                             {
-                               var grocItem = "" 
+                               var grocItem = ""
+                               
                                 grocItem = localStorage.getItem(i);
-                                alert(grocItem);
-                                $("#results").append("<li data-icon='minus' id="+i+" onclick='deleteItem("+i+")', "+i+");'><a style='color:white' id='a"+i+"'>"+grocItem+"</a></li>");
+                                if (grocItem != null)
+                                {
+                                    //alert(grocItem);
+                                    count +=1;
+                                    localStorage.removeItem(i);
+                                    localStorage.setItem(count, grocItem);
+                                    //alert(localStorage.getItem(count));
+                                    $("#results").append("<li data-icon='minus' id="+count+" onclick='deleteItem("+count+")', "+count+");'><a style='color:white' id='a"+count+"'>"+grocItem+"</a></li>");
+                                }
+                                    
                                 //$('#results').listview('refresh');
                             }
+                    }
+                 else
+                    {
+                        localStorage.setItem('counter', 0);
+                         counter = 0;
                     }
                 //localStorage["counter"] += 1;
                 
@@ -185,8 +198,7 @@
             {
                 $("#results").html("").add();
             	counter = 0;
-                localStorage.setItem('countcounterunter);
-                                    
+                localStorage.setItem('counter', counter);                                    
             }
                      
             function addIngredient(name)
@@ -197,8 +209,10 @@
                        counter = parseInt(strcounter);                                 
                    }                       
                 counter += 1;
+                var itemID = counter;
                 localStorage.setItem('counter', counter);
-                localStorage.setItem("ing"+counter, name);
+                localStorage.setItem(itemID, name);
+                                    alert(localStorage.getItem(itemID));
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+name+"</a></li>");                         
                 $('#results').listview('refresh'); 
             }
@@ -207,7 +221,7 @@
             {
                 
                 $("#" + id).remove();
-                localStorage.removeItem('ingredient'+id);
+                localStorage.removeItem(id);
                 
             }
             function manualAdd()
@@ -222,10 +236,13 @@
                   counter = parseInt(strcounter);
                 }        
                 counter += 1;                                    
-                //parseInt(counter) += 1;                                    
-                localStorage.setItem('ingredient'+counter, $("#groceryItem").val());                                   
-                localStorage.setItem('counter', counter);                                    
+                //parseInt(counter) += 1;                                                                        
                 var grocery = $("#groceryItem").val().replace(/[^a-zA-Z0-9]/g,' ');
+                var itemID = counter;
+                localStorage.setItem('counter', counter);
+                localStorage.setItem(itemID, grocery);
+                                    alert(localStorage.getItem(itemID));
+                                    alert(itemID);
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+grocery+"</a></li>");
                 $('#results').listview('refresh');
                 $("#groceryItem").val("");                                    
