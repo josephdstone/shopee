@@ -58,22 +58,18 @@
            data-icon="search" data-iconpos="right" data-theme="b">
             Search Recipes
         </a>
-    </p>
-	</ul>    
-	
-	<ul style="margin-left:-25px; padding-right:25px; width:90%" data-theme="b" data-role="collapsible">
+        <ul style="margin-left:-52px; width:110%" data-theme="b" data-role="collapsible">
 	<h3 style="text-align:center;" data-theme="b">Recipe Results</h3>
 	<p>
         <ul style="width:110%"data-role="listview">
-            <li id="recipeList" data-role="listview" data-theme="b"></li>        
+            <ui id="recipeList" data-role="listview" data-inset="true" data-theme="b"></ui> 
+            <li data-inset="true" data-role="listview" data-theme="a" id="ingredientList"></li>
     </ul>
     </p>
 	</ul>
-	
-  
-        
-            
-        
+    </p>
+	</ul>    
+	        
         <br>
         <h3>Shoppee List</h3>
         <ul data-role="listview">
@@ -86,6 +82,25 @@
     			width: 100%;
     			margin-left: -40px;
 			}
+            
+        .custom-li
+            {
+                padding: 0;
+                border-width:0;
+            }
+
+        .custom-bottom-li 
+            {
+                border-top-width: 0;  
+}
+
+        .custom-collapsible
+            {
+                margin: 0;   
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+                border-width:0;
+            }
         </style>
         <script>
             var totalScanned = -0;
@@ -93,38 +108,28 @@
             var grandTotal = -0;
             var counter = -0;
             var reccounter = -0;
+            var ingcounter= -0;
             var subtract = -0;
             window.onload = populateList();
             function populateList()
             {
-                $.ajax({
-                                'async':false,
-                                'type': "GET",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/getgrocerylist",
-                                'datatype':"json",
-  				              'success': function(data) 
-                                    {
-                                        counter+=1;
-                                        //$("#recipeList").append("<li data-icon='plus' id="+Counter+" onclick='deleteListItem("+Counter+")', "+Counter+");'><a id='alist"+Counter+"' style='color:white'>data 1</a></li>");
-                                        if (data != "")
-                                        {
-                                            var groceryList = data;
-                                            for (var i = 0; i < groceryList.length; i++) 
-                                                {
-                                                  counter += 1;
-                                                  $("#results").append("<li data-role='listview' data-theme='b' data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a id='alist"+counter+"'style='color:white'>"+data[i].productName+"</a></li>");
-
-                                                }                                            
-                                        }
-                                        
-                                     
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("Oops, sorry about that! Something happened, please try again!.");
-                        
-                                    }
-                                })
+              strcounter = localStorage.getItem('counter');
+              
+                if (strcounter != null)
+                    {
+                        counter = parseInt(strcounter);
+                        for (var i = 0; i < counter; i++) 
+                            {
+                               var grocItem = "" 
+                                grocItem = localStorage.getItem(i);
+                                alert(grocItem);
+                                $("#results").append("<li data-icon='minus' id="+i+" onclick='deleteItem("+i+")', "+i+");'><a style='color:white' id='a"+i+"'>"+grocItem+"</a></li>");
+                                //$('#results').listview('refresh');
+                            }
+                    }
+                //localStorage["counter"] += 1;
+                
+                //localStorage["ingredient"+localStorage["counter"]] = name;
             }
             
             function ajaxRecipeSearch()
@@ -145,10 +150,27 @@
                                                 {   
                                                     reccounter += 1;
                                                    $("#recipeList").append("<li data-role='listview' data-icon='plus' id="+reccounter+" onclick='deleteListItem(rli"+reccounter+")', "+reccounter+");'><a id='rlist"+reccounter+"'>"+data.matches[i].recipeName+"</a></li>");
-
+                                                    
+                                                   $('#recipeList').listview('refresh');
+                                                    for (var j = 0; j < data.matches[i].ingredients.length; j++)
+                                                    {
+                                                        var ingredient = data.matches[i].ingredients[j];
+                                                        //alert(ingredient);
+                                                        strcounter = localStorage.getItem('counter');
+                                                        if (strcounter!="")
+                                                            {
+                                                                counter = parseInt(strcounter);
+                                                            }
+                                                        counter += 1;
+                                                        localStorage.setItem('ingredient'+localStorage.getItem('counter'), name)
+                                                        $("#ingredientList").append("<li data-role='listview' data-icon='plus' id='in'"+ingcounter+" onclick='addIngredient("+ingredient+")', "+ingcounter+");'><a id='ilist"+ingcounter+"'>"+ingredient+"</a></li>");
+                                                        $("#ingredientList").listview('refresh');
+                                                    }
+                                                    //localStorage["recipe"+reccounter] = data.matches[i].recipeName;
+                                                    //alert(localStorage["recipe"+reccounter]);
                                                 }                                            
                                         }
-                                        ec
+                                        
                                      
                                     },
                                 'error':function(data)
@@ -163,74 +185,51 @@
             {
                 $("#results").html("").add();
             	counter = 0;
-                $.ajax({
-                                'async':false,
-                                'type': "POST",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/clearShoppingList",
-                                'datatype':"json",
-  				              'success': function(data) 
-                                    {
-                                        
-                                       
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("error");
-                        
-                                    }
-                                })
+                localStorage.setItem('countcounterunter);
                                     
             }
-            
+                     
+            function addIngredient(name)
+            {
+                strcounter = localStorage.getItem('counter');
+                if (strcounter != "")
+                   {
+                       counter = parseInt(strcounter);                                 
+                   }                       
+                counter += 1;
+                localStorage.setItem('counter', counter);
+                localStorage.setItem("ing"+counter, name);
+                $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+name+"</a></li>");                         
+                $('#results').listview('refresh'); 
+            }
+                                        
             function deleteItem(id)
             {
-                var pName = $('#alist'+id).text();
-                $.ajax({
-                                'async':false,
-                                'type': "GET",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/deleteGroceryListItem?productN="+pName,
-                                'datatype':"json",
-  				              'success': function(data) 
-                                    {
-                                        $("#" + id).remove();
-                                        
-                                     
-                                    },
-                                'error':function(data)
-                                    {
-                                        $("#" + id).remove();
-                        
-                                    }
-                                })
+                
+                $("#" + id).remove();
+                localStorage.removeItem('ingredient'+id);
                 
             }
-            
             function manualAdd()
             {
             if ($("#groceryItem").val() != "")
-               {
-                counter += 1;
+               {                                        
+                  var strcounter = localStorage.getItem('counter');                                     
+                  
+                                                    
+               if (strcounter != "")
+                {                                                                      
+                  counter = parseInt(strcounter);
+                }        
+                counter += 1;                                    
+                //parseInt(counter) += 1;                                    
+                localStorage.setItem('ingredient'+counter, $("#groceryItem").val());                                   
+                localStorage.setItem('counter', counter);                                    
                 var grocery = $("#groceryItem").val().replace(/[^a-zA-Z0-9]/g,' ');
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+grocery+"</a></li>");
-                $('#results').listview('refresh'); 
+                $('#results').listview('refresh');
+                $("#groceryItem").val("");                                    
                 
-                 $.ajax({
-                                'async':true,
-                                'type': "POST",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/addGroceryList",
-                                'datatype':"json",
-                                'data': { productName: grocery },
-  				              'success': function(data) 
-                                    {
-                                      $("#groceryItem").val("");  
-                                       
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("error");
-                        
-                                    }
-                                })                                   
                 }
                    else 
                    alert("Please enter an item.");
@@ -255,7 +254,15 @@
                                         if (data != "")
                                         {
                                         var itemName = data.item_name.replace(/[^a-zA-Z0-9]/g,' ');
+                                        
+                                        strcounter = localStorage.getItem('counter');
+                                        if (strcounter != "")
+                                              {
+                                                  counter = parseInt(strcounter);      
+                                              }
                                         counter += 1;
+                                        localStorage.setItem('counter', counter);
+                                        localStorage.setItem('ingredient'+counter, itemName);
                                         $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+itemName+"</a></li>");
                                         $('#results').listview('refresh'); 
                                             
@@ -264,28 +271,6 @@
                                         alert("Item not found, please use Manual Options to add to your Shoppee List.");
                                 
                                         
-                            $.ajax({
-                                'async':false,
-                                'type': "POST",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/addGroceryList",
-                                'datatype':"json",
-                                'data': { productName: $("#a"+counter).text() },
-  				              'success': function(data) 
-                                    {
-                                        
-                                       
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("error");
-                        
-                                    }
-                                })
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("Product not found, please use manual options to enter item.");
-                        
                                     }
                                 
                                 
