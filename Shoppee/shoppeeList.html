@@ -24,10 +24,10 @@
     
         		
 
-    <div data-swipe-close="false" data-role="panel" id="ingredientPanel">
+    <div data-theme="a" style="align:center;"  data-swipe-close="false" data-role="panel" id="ingredientPanel">
         <h4>Select ingredients to add to your Shoppee List</h4>
-        <ul  data-role="listview">
-            <li id="ingredientList" data-role="listview" data-theme="a"></li>
+        <ul style="align:center" data-role="listview">
+            <li style="align:center" id="ingredientList" data-role="listview" data-theme="a"></li>
 	    </ul>
      </div><!-- /panel -->
     <div data-role="header"></div>
@@ -126,7 +126,7 @@
                   {
                     var ingl = arr[int][k];
                     var ing = "\""+arr[int][k]+"\"";
-                    $("#ingredientList").append("<li data-icon='plus' onclick='addIngredient("+ing+", "+k+")', "+k+");'><a id='anchor"+k+"' style='color:white''>"+ingl+"</a></li>");
+                    $("#ingredientList").append("<li data-icon='plus' onclick='addIngredient("+ing+", "+k+")', "+k+");'><a id='anchor"+k+"' style='color:white text-align:center;''>"+ingl+"</a></li>");
                     $('#ingredientList').listview('refresh'); 
                   }
                 $("#ingredientPanel").panel( "open" );
