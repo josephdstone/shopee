@@ -141,20 +141,15 @@
                     {
                         for (var i = 0; i < counter; i++) 
                             {
-                               var grocItem = ""
-                               
+                                var grocItem = ""
                                 grocItem = localStorage.getItem(i);
                                 if (grocItem != null)
                                 {
-                                    //alert(grocItem);
-                                    count +=1;
                                     localStorage.removeItem(i);
                                     localStorage.setItem(count, grocItem);
-                                    //alert(localStorage.getItem(count));
                                     $("#results").append("<li data-icon='minus' id="+count+" onclick='deleteItem("+count+")', "+count+");'><a style='color:white' id='a"+count+"'>"+grocItem+"</a></li>");
+                                    count +=1;
                                 }
-                                    
-                                //$('#results').listview('refresh');
                             }
                     }
                  else
