@@ -20,7 +20,9 @@
 <div data-role="page">			
 
     <div data-role="panel" id="ingredientPanel">
-        <!-- panel content goes here -->
+        <ul data-role="listview">
+            <li id="ingredientList" data-role="listview" data-theme="a"></li>
+	    </ul>
     </div><!-- /panel -->
     <body>
         <H1 style="color:#B80000">Shoppee List</H1>
@@ -113,9 +115,9 @@
             var subtract = -0;
             
             
-            function populatePanel();
+            function populatePanel()
             {
-                
+                for (var k = 0; k < )
             }
             
             window.onload = populateList();
@@ -170,7 +172,6 @@
                                                    
                                                    $('#recipeList').listview('refresh');
                                                    arr[i]=new Array(data.matches[i].ingredients.length);
-                                                    alert(arr[0,0]);
                                                     for (var j = 0; j < data.matches[i].ingredients.length; j++)
                                                     {   
                                                         arr[i][j]=data.matches[i].ingredients[j];
