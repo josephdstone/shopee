@@ -92,22 +92,24 @@
             
            setTimeout(function() {
                                       var ct = -0;
-                                      counter = parseInt(localStorage.getItem('counter')*1);
-                                      totalScanned = -0
-                                      taxRate = parseFloat(localStorage.getItem('taxRate')*1);
                                       grandTotal = -0;
-                                        //alert(counter+" counter")
+                                      totalScanned = -0
+                                      counter = parseInt(localStorage.getItem('counter')*1);
+                                      taxRate = parseFloat(localStorage.getItem('taxRate')*1);
+                                      $("#tax").val(taxRate.toFixed(0)*100);
+                                      
+                                      var nm =""
                                       if (counter != 0)  
                                       {
-                                        for (var j = 0; j < counter+1; j++)
+                                        for (var j = 0; j < counter; j++)
                                            {
-                                            
+                                            nm = localStorage.getItem(j);
                                             val = parseFloat(localStorage.getItem('Price'+j)*1);
-                                            //alert(val);
-                                                if (val != 0)
+                                            
+                                                if (nm != "null" && nm != null)
                                                 {
-                                                        ct+=1;
-                                                    var nm = localStorage.getItem(j);
+                                                        
+                                                     
                                                     localStorage.removeItem(j);
                                                     localStorage.setItem(ct, nm);
                                                     localStorage.removeItem('Price'+j);
@@ -115,8 +117,7 @@
                                                     grandTotal += (val + (taxRate*val))
                                                     totalScanned += val;
                                                     $("#results").append("<li data-icon='minus' id="+ct+" onclick='deleteItem($(a"+ct+").text(), "+ct+");'><a style='color:white' id='a"+ct+"'>"+nm +" $"+ val+"</a></li>");
-                                                    
-                                                    //alert(ct);
+                                                    ct+=1;
                                                 }
                                                 else
                                                 {
@@ -128,7 +129,6 @@
                                                     
                                          if (ct == 0)
                                             {
-                                                   //alert("ct = 0");
                                                 localStorage.setItem('counter', 0);
                                                 localStorage.setItem('grandTotal', 0); 
                                                 localStorage.setItem('taxRate', 0);
@@ -136,7 +136,6 @@
                                             }
                                           else
                                             {
-                                                    //alert("ct > 0");
                                                 counter = ct;
                                                 localStorage.setItem('counter', ct);        
                                             }
