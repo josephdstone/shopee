@@ -126,7 +126,7 @@
                   {
                     var ingl = arr[int][k];
                     var ing = "\""+arr[int][k]+"\"";
-                    $("#ingredientList").append("<li data-icon='plus' onclick='addIngredient("+ing+")', "+k+");'><a style='color:white''>"+ingl+"</a></li>");
+                    $("#ingredientList").append("<li data-icon='plus' onclick='addIngredient("+ing+")', "+k+");'><a onclick='color:yellow' style='color:white''>"+ingl+"</a></li>");
                     $('#ingredientList').listview('refresh'); 
                   }
                 $("#ingredientPanel").panel( "open" );
