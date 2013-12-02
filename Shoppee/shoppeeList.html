@@ -122,14 +122,17 @@
             
             function populatePanel(int)
             {
+                counter = localStorage.getItem('listCounter');
                 $("#ingredientList li").remove();
                 var length = arr[int].length;
                 for (var k = 0; k < length; k++)
                   {
+                    counter+=1
                     $("#ingredientList").append("<li id='i"+counter+"' onclick='addIngredient("+k+")' data-role='listview' data-icon='plus', "+counter+");'><a href='#recipePanel' id='ilist"+counter+"'>"+arr[int][k]+"</a></li>");
                     
                   }
                 $("#ingredientPanel").panel( "open" );
+                localStorage.setItem('listCounter', counter);
             }
             
             window.onload = populateList();
