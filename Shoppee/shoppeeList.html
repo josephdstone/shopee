@@ -262,7 +262,7 @@
                             ({
                                 'async':false,
                                 'type': "GET",
-                                'url': "https://api.nutritionix.com/v1_1/item?upc="+result.text+"&appId=6dd9a013&appKey=2f130ac4bb1d8caac032e7a0e426ead9",
+                                'url': "https://api.nutritionix.com/v1_1/item?upc="+result.text+"&appId=d8555c46&appKey=da5b9609b64eacce81e7920faba0f5bf",
                                 'datatype':"json",
   				              'success': function(data) 
                                     {
@@ -270,11 +270,7 @@
                                         {
                                         var itemName = data.item_name.replace(/[^a-zA-Z0-9]/g,' ');
                                         
-                                        strcounter = localStorage.getItem('listCounter');
-                                        if (strcounter != "")
-                                              {
-                                                  counter = parseInt(strcounter);      
-                                              }
+                                        counter = parseInt(localStorage.getItem('listCounter')*1);
                                         counter += 1;
                                         localStorage.setItem('listCounter', counter);
                                         localStorage.setItem('ingredient'+counter, itemName);
