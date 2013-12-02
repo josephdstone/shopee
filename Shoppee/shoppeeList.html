@@ -142,7 +142,7 @@
                          counter = 0;
                     }
             }
-            
+            var arr;
             function ajaxRecipeSearch()
             {
              $.ajax({
@@ -152,13 +152,14 @@
                                 'datatype':"json",
   				              'success': function(data) 
                                     {
-                                        var arr = new Array();
+                                        
                                         if (data != "")
                                         {
                                         //alert(data.matches[0].recipeName);
-                                            //alert(data.matches.length);
+                                            var arrLength = data.matches.length;
                                             for (var i = 0; i < data.matches.length; i++) 
                                                 {   
+                                                    arr = new Array(arrLength);
                                                     reccounter += 1;
                                                    $("#recipeList").append("<li data-role='listview' data-icon='plus' id="+reccounter+" onclick='deleteListItem(rli"+reccounter+")', "+reccounter+");'><a id='rlist"+reccounter+"'>"+data.matches[i].recipeName+"</a></li>");
                                                     
@@ -167,14 +168,11 @@
                                                     {
                                                         arr[i][j] = data.matches[i].ingredients[j];
                                                         //alert(ingredient);
-                                                        strcounter = localStorage.getItem('listCounter');
-                                                        if (strcounter!="")
-                                                            {
-                                                                counter = parseInt(strcounter);
-                                                            }
+                                                        counter = parseInt(localStorage.getItem('listCounter')*1);
+
                                                         counter += 1;
                                                         localStorage.setItem('ingredient'+localStorage.getItem('listCounter'), name)
-                                                        $("#ingredientList").append("<li data-role='listview' data-icon='plus' id='in'"+ingcounter+" onclick='addIngredient("+ingredient+")', "+ingcounter+");'><a id='ilist"+ingcounter+"'>"+ingredient+"</a></li>");
+                                                        $("#ingredientList").append("<li data-role='listview' data-icon='plus' id='in'"+counter+" onclick='addIngredient("+ingredient+")', "+counter+");'><a id='ilist"+counter+"'>"+ingredient+"</a></li>");
                                                         $("#ingredientList").listview('refresh');
                                                     }
                                                     //localStorage["recipe"+reccounter] = data.matches[i].recipeName;
