@@ -17,7 +17,9 @@
         <script src="Plugins/com.phonegap.plugins.barcodescanner-0.7.0/www/barcodescanner.js"></script>
         <title></title>
     </head>
-<div data-role="page">	
+
+       <body>   
+  <div data-role="page">	
     
         		
 
@@ -28,8 +30,7 @@
      </div><!-- /panel -->
     <div data-role="header"></div>
 
-<div data-role="content">
-       <body>     
+    <div data-role="content">
         <H1 style="color:#B80000">Shoppee List</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -122,17 +123,14 @@
             
             function populatePanel(int)
             {
-                counter = localStorage.getItem('listCounter');
                 $("#ingredientList li").remove();
                 var length = arr[int].length;
                 for (var k = 0; k < length; k++)
                   {
-                    counter+=1
-                    $("#ingredientList").append("<li id='i"+counter+"' onclick='addIngredient("+k+")' data-role='listview' data-icon='plus', "+counter+");'><a href='#recipePanel' id='ilist"+counter+"'>"+arr[int][k]+"</a></li>");
+                    $("#ingredientList").append("<li onclick='addIngredient("+arr[int][k]+")' data-role='listview' data-icon='plus');'><a>"+arr[int][k]+"</a></li>");
                     
                   }
                 $("#ingredientPanel").panel( "open" );
-                localStorage.setItem('listCounter', counter);
             }
             
             window.onload = populateList();
@@ -213,11 +211,8 @@
                      
             function addIngredient(name)
             {
-                strcounter = localStorage.getItem('listCounter');
-                if (strcounter != "")
-                   {
-                       counter = parseInt(strcounter);                                 
-                   }                       
+                alert(name);
+                counter = parseInt(localStorage.getItem('listCounter')*1);                     
                 counter += 1;
                 var itemID = counter;
                 localStorage.setItem('listCounter', counter);
@@ -321,8 +316,8 @@
 		</ul>
 	</div><!-- /navbar -->
 </div><!-- /footer --> 
-        
-    </body>
-    </div>
+        </div>
    </div>
+    </body>
+    
 </html>
