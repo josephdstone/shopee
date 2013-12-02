@@ -122,7 +122,7 @@
                 var length = arr[int].length;
                 for (var k = 0; k < length; k++)
                   {
-                    $("#ingredientList").append("<li onclick='addIngredient("+arr[int][k]+")' data-role='listview' data-icon='plus');'><a>"+arr[int][k]+"</a></li>");
+                    $("#ingredientList").append("<li onclick='addIngredient("+arr[int][k]+")' data-role='listview' data-icon='plus');'><a style='color:white'>"+arr[int][k]+"</a></li>");
                     $('#ingredientList').listview('refresh'); 
                   }
                 $("#ingredientPanel").panel( "open" );
