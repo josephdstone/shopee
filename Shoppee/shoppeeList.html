@@ -115,9 +115,13 @@
             var subtract = -0;
             
             
-            function populatePanel()
+            function populatePanel(int)
             {
-                for (var k = 0; k < )
+                var length = arr[int].length;
+                for (var k = 0; k < length; k++)
+                  {
+                    $("#ingredientList").append("<li id='i"+counter+"' onclick='addIngredient("+i+")' data-role='listview' data-icon='plus', "+counter+");'><a href='#recipePanel' id='ilist"+counter+"'>"+arr[int][k]+"</a></li>");
+                  }
             }
             
             window.onload = populateList();
