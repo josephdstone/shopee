@@ -161,23 +161,24 @@
                                                 {   
                                                     arr = new Array(arrLength);
                                                     reccounter += 1;
-                                                   $("#recipeList").append("<li data-role='listview' data-icon='plus' id="+reccounter+" onclick='deleteListItem(rli"+reccounter+")', "+reccounter+");'><a id='rlist"+reccounter+"'>"+data.matches[i].recipeName+"</a></li>");
+                                                   $("#recipeList").append("<li data-role='listview' data-icon='plus' id="+reccounter+" onclick='populatePanel(rli"+reccounter+")', "+reccounter+");'><a id='rlist"+reccounter+"'>"+data.matches[i].recipeName+"</a></li>");
                                                     
                                                    $('#recipeList').listview('refresh');
                                                     for (var j = 0; j < data.matches[i].ingredients.length; j++)
                                                     {
+                                                        var arrLength2 = data.matches[i].ingredients.length;
+                                                        alert(arrLength2);
+                                                        arr[i] = new Array(arrLength2)
                                                         arr[i][j] = data.matches[i].ingredients[j];
                                                         //alert(ingredient);
                                                         counter = parseInt(localStorage.getItem('listCounter')*1);
 
                                                         counter += 1;
-                                                        localStorage.setItem('ingredient'+localStorage.getItem('listCounter'), name)
-                                                        $("#ingredientList").append("<li data-role='listview' data-icon='plus' id='in'"+counter+" onclick='addIngredient("+ingredient+")', "+counter+");'><a id='ilist"+counter+"'>"+ingredient+"</a></li>");
-                                                        $("#ingredientList").listview('refresh');
+                                                        //alert(arr[0][0]);
                                                     }
                                                     //localStorage["recipe"+reccounter] = data.matches[i].recipeName;
                                                     //alert(localStorage["recipe"+reccounter]);
-                                                }                                            
+                                                }    
                                         }
                                         
                                      
