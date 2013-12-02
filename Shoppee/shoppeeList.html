@@ -18,7 +18,7 @@
         <title></title>
     </head>
 <div data-role="page">	
-    <body>
+    
         		
 
     <div data-role="panel" id="ingredientPanel">
@@ -26,7 +26,10 @@
             <li id="ingredientList" data-role="listview" data-theme="a"></li>
 	    </ul>
      </div><!-- /panel -->
-            
+    <div data-role="header"></div>
+
+<div data-role="content">
+       <body>     
         <H1 style="color:#B80000">Shoppee List</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -124,8 +127,9 @@
                 for (var k = 0; k < length; k++)
                   {
                     $("#ingredientList").append("<li id='i"+counter+"' onclick='addIngredient("+k+")' data-role='listview' data-icon='plus', "+counter+");'><a href='#recipePanel' id='ilist"+counter+"'>"+arr[int][k]+"</a></li>");
-                    $("#ingredientPanel").panel( "open" );
+                    
                   }
+                $("#ingredientPanel").panel( "open" );
             }
             
             window.onload = populateList();
@@ -316,5 +320,6 @@
 </div><!-- /footer --> 
         
     </body>
+    </div>
    </div>
 </html>
