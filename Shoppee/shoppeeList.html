@@ -111,6 +111,13 @@
             var reccounter = -0;
             var ingcounter= -0;
             var subtract = -0;
+            
+            
+            function populatePanel();
+            {
+                
+            }
+            
             window.onload = populateList();
             function populateList()
             {
@@ -169,12 +176,9 @@
                                                         var arrLength2 = data.matches[i].ingredients.length;
                                                         arr[i] = new Array(arrLength2)
                                                         arr[i][j] = data.matches[i].ingredients[j];
-                                                        //alert(arr[i][j]);
-                                                        //alert(ingredient);
                                                         counter = parseInt(localStorage.getItem('listCounter')*1);
 
                                                         counter += 1;
-                                                        //alert(arr[0][0]);
                                                     }
                                                     //localStorage["recipe"+reccounter] = data.matches[i].recipeName;
                                                     //alert(localStorage["recipe"+reccounter]);
