@@ -137,7 +137,7 @@
             {
               counter = localStorage.getItem('listCounter')*1;
               var count = -0;
-                if (counter != null || counter != 0)
+                if (counter != null && counter != 0)
                     {
                         for (var i = 0; i < counter; i++) 
                             {
@@ -210,13 +210,11 @@
                      
             function addIngredient(name)
             {
-                alert(name);
                 counter = parseInt(localStorage.getItem('listCounter')*1);                     
                 counter += 1;
                 var itemID = counter;
                 localStorage.setItem('listCounter', counter);
                 localStorage.setItem(itemID, name);
-                                    alert(localStorage.getItem(itemID));
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+name+"</a></li>");                         
                 $('#results').listview('refresh'); 
             }
