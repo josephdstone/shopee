@@ -24,7 +24,7 @@
     
         		
 
-    <div data-role="panel" id="ingredientPanel">
+    <div data-swipe-close="false" data-role="panel" id="ingredientPanel">
         <h4>Select ingredients to add to your Shoppee List</h4>
         <ul  data-role="listview">
             <li id="ingredientList" data-role="listview" data-theme="a"></li>
@@ -126,7 +126,7 @@
                   {
                     var ingl = arr[int][k];
                     var ing = "\""+arr[int][k]+"\"";
-                    $("#ingredientList").append("<li data-icon='plus' onclick='addIngredient("+ing+", "+k+")', "+k+");'><a id='anchor'"+k+" style='color:white''>"+ingl+"</a></li>");
+                    $("#ingredientList").append("<li data-icon='plus' onclick='addIngredient("+ing+", "+k+")', "+k+");'><a id='anchor"+k+"' style='color:white''>"+ingl+"</a></li>");
                     $('#ingredientList').listview('refresh'); 
                   }
                 $("#ingredientPanel").panel( "open" );
@@ -205,7 +205,7 @@
                      
             function addIngredient(name, int)
             { 
-                $("#anchor"+int).css('color','green');
+                $("#anchor"+int).css('color','yellow');
                 counter = parseInt(localStorage.getItem('listCounter')*1);                     
                 counter += 1;
                 var itemID = counter;
