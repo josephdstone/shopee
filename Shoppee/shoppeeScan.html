@@ -14,7 +14,6 @@
 
         <script src="scripts/login.js" type="text/javascript"></script>
         <script src="scripts/location.js" type="text/javascript"></script>
-        <script src="Plugins/com.phonegap.plugins.barcodescanner-0.7.0/www/barcodescanner.js"></script>
         <title>Scan Your Item</title>
     </head>
 
@@ -25,10 +24,6 @@
         <br>
         <br>
         <a style="margin-right:10%;margin-left:10%;" data-role="button" id="btnScan" data-iconpos="right" data-icon="plus" data-theme="b">Scan Product</a>
-        <a style="margin-right:10%;margin-left:10%;" id="btnBack" data-role="button" href="modeSelect.html"
-           data-icon="back" data-iconpos="right" data-transition="slide" data-theme="b">
-            Previous Page
-        </a>
         <a style="margin-right:10%;margin-left:10%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeCart()" href=""
            data-icon="delete" data-iconpos="right" data-theme="b">
             Clear Cart
@@ -94,6 +89,62 @@
             var counter = -0;
             var subtract = -0;
             var Counter2 = -0;
+            
+           setTimeout(function() {
+                                      var ct = -0;
+                                      counter = parseInt(localStorage.getItem('counter')*1);
+                                      totalScanned = -0
+                                      taxRate = parseFloat(localStorage.getItem('taxRate')*1);
+                                      grandTotal = -0;
+                                        //alert(counter+" counter")
+                                      if (counter != 0)  
+                                      {
+                                        for (var j = 0; j < counter+1; j++)
+                                           {
+                                            
+                                            val = parseFloat(localStorage.getItem('Price'+j)*1);
+                                            //alert(val);
+                                                if (val != 0)
+                                                {
+                                                        ct+=1;
+                                                    var nm = localStorage.getItem(j);
+                                                    localStorage.removeItem(j);
+                                                    localStorage.setItem(ct, nm);
+                                                    localStorage.removeItem('Price'+j);
+                                                    localStorage.setItem('Price'+ct, val);
+                                                    grandTotal += (val + (taxRate*val))
+                                                    totalScanned += val;
+                                                    $("#results").append("<li data-icon='minus' id="+ct+" onclick='deleteItem($(a"+ct+").text(), "+ct+");'><a style='color:white' id='a"+ct+"'>"+nm +" $"+ val+"</a></li>");
+                                                    
+                                                    //alert(ct);
+                                                }
+                                                else
+                                                {
+                                                    localStorage.removeItem(j); 
+                                                    localStorage.removeItem('Price'+j); 
+                                                }
+                                           }
+                                            $("#total").val(grandTotal.toFixed(2));
+                                                    
+                                         if (ct == 0)
+                                            {
+                                                   //alert("ct = 0");
+                                                localStorage.setItem('counter', 0);
+                                                localStorage.setItem('grandTotal', 0); 
+                                                localStorage.setItem('taxRate', 0);
+                                                localStorage.setItem('totalScanned', 0);
+                                            }
+                                          else
+                                            {
+                                                    //alert("ct > 0");
+                                                counter = ct;
+                                                localStorage.setItem('counter', ct);        
+                                            }
+                                      }
+            
+            
+            },1000);
+            
             $( "#coll" ).collapsible(
             {
                    create: function(event, ui) 
@@ -102,42 +153,53 @@
             }
             });
             function populateList()
-            {
-                $.ajax({
-                                'async':false,
-                                'type': "GET",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/getgrocerylist",
-                                'datatype':"json",
-  				              'success': function(data) 
-                                    {
-                                        if (data != "")
+                                {
+                                      
+                                      var listCounter = localStorage.getItem('listCounter')*1;
+                                      var count = 0;
+                                        if (listCounter != null || listCounter != 0)
                                         {
-                                            var groceryList = data;
-                                            for (var i = 0; i < groceryList.length; i++) 
+                                            for (var i = 0; i < listCounter+1; i++) 
+                                            {
+                                               var grocItem = ""
+                                                grocItem = localStorage.getItem(i);
+                                                if (grocItem != null)
                                                 {
-                                                  Counter2 += 1;
-                                                  $("#shoppingList").append("<li data-icon='minus' id="+Counter2+" onclick='deleteListItem("+Counter2+")', "+Counter2+");'><a id='alist"+Counter2+"' style='color:white'>"+data[i].productName+"</a></li>");
-                                                }                                            
+                                                    localStorage.removeItem(i);
+                                                    localStorage.setItem(count, grocItem);
+                                                    $("#shoppingList").append("<li data-icon='minus' id="+count+" onclick='deleteListItem("+count+")', "+count+");'><a style='color:white' id='a"+count+"'>"+grocItem+"</a></li>");
+                                                    count +=1;
+                                                }
+                                    
+                                
+                                            }
+                                              
                                         }
                                         else
                                         {
                                             $("#shoppingList").html("Shopping List Empty");
                                         }
+                                     if (count == 0)
+                                                    {
+                                                        counter=0;
+                                                        localStorage.setItem('listCounter', 0);
+                                                        $("#shoppingList").append("<div  onclick='deleteListItem()', );'><a style='color:white; text-align:center;' id=''>Shopping List Empty</a></div>");
+                                                    }
                                      
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("Oops, sorry about that! Something happened, please try again!.");
-                        
-                                    }
-                                })
-            }
+                                    
+                                
+                                }
+            
             
             function clearShoppeeCart()
-             {
+            {
                 totalScanned = 0;
                 document.getElementById('total').value = ""; 
                 $("#results").html("").add();
+                localStorage.setItem('totalScanned', 0);  
+                localStorage.setItem('taxRate', 0); 
+                localStorage.setItem('grandTotal', 0);  
+                localStorage.setItem('counter', 0);                                     
                 totalScanned = 0;
                 taxRate = 0;
                 grandTotal = 0;
@@ -158,6 +220,16 @@
                 totalScanned += parseFloat(val);
                 taxRate = document.getElementById('tax').value * .01;
                 grandTotal = totalScanned + (taxRate * totalScanned);
+                                        alert(counter);            
+             //Adding values to local storage    
+                localStorage.setItem('counter', counter);
+                localStorage.setItem(counter, manualName); 
+                localStorage.setItem('Price'+counter, val);                                      
+                localStorage.setItem('totalScanned', totalScanned);  
+                localStorage.setItem('taxRate', taxRate);  
+                localStorage.setItem('grandTotal', grandTotal);  
+                                   
+             //Clearing and updating totals/values
                 document.getElementById('total').value =  (grandTotal).toFixed(2); 
                 document.getElementById('manName').value = "";
                 document.getElementById('manPrice').value = "";
@@ -170,38 +242,35 @@
             
             function deleteItem(value, counter)
             {
+                                                    
                 var split = (value).split("$");
                 price = split[1];
-                taxrate = document.getElementById('tax').value *.01; 
+                taxrate = localStorate.getItem('taxRate');
                 subtract = parseFloat(price * 1  + ( 1 * taxrate * price * 1)).toFixed(2);
                 totalScanned -= price;
                 grandTotal = parseFloat(document.getElementById('total').value);
                 grandTotal -= subtract;
-            	document.getElementById('total').value = (grandTotal).toFixed(2);
-                $("#" + counter).remove();
+                document.getElementById('total').value = (grandTotal).toFixed(2);
+                $("#" + counter).remove();    
+                                                    
+               //Updates local Storage    
+                localStorage.removeItem(counter);
+                localStorage.setItem('taxrate', taxrate);                                    
+                localStorage.setItem('totalScanned', totalScanned);                                   
+                localStorage.setItem('grandTotal', grandTotal);
+            	
             }
             
+            function navigateShoppeeList()
+            {
+                $.mobile.changePage("shoppeeList.html", {reloadPage: true}); 
+                //window.location.href="shoppeeList.html";
+            }
+                                                    
             function deleteListItem(id)
             {
-                var pName = $('#alist'+id).text();
-                $.ajax({
-                                'async':false,
-                                'type': "GET",
-                                'url': "http://josephdstone-001-site1.smarterasp.net/api/Values/deleteGroceryListItem?productN="+pName,
-                                'datatype':"json",
-  				              'success': function(data) 
-                                    {
-                                        $("#" + id).remove();
-                                        
-                                     
-                                    },
-                                'error':function(data)
-                                    {
-                                        alert("Oops, sorry about that! Something happened, please try again!.");
-                        
-                                    }
-                                })
-                
+                 $("#" + id).remove();   
+                 localStorage.removeItem(id);                                   
             }
                 
             $("#btnScan").click(function () 
@@ -252,6 +321,13 @@
             
                    
         </script>
-    
+         <div data-role="footer" data-theme="a" data-position="fixed">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="modeSelect.html">Mode Select</a></li>
+			<li><a onclick="navigateShoppeeList()">Grocery List</a></li>
+		</ul>
+	</div><!-- /navbar -->
+</div><!-- /footer --> 
     </body>
 </html>
