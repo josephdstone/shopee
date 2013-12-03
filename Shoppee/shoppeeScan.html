@@ -217,7 +217,11 @@
             {
             if (document.getElementById('manPrice').value != "")
             {   
+                counter = parseInt(localStorage.getItem('counter')*1);
+               if (counter != 0) 
+               { 
                 counter += 1;
+               }                                    
                 grandTotal = document.getElementById('total').value;
                 var manualName = document.getElementById('manName').value.replace(/[^a-zA-Z0-9]/g,' ');
                 var val = document.getElementById('manPrice').value;
@@ -228,13 +232,16 @@
                 grandTotal = totalScanned + (taxRate * totalScanned);
                                         alert(counter);            
              //Adding values to local storage    
-                localStorage.setItem('counter', counter);
                 localStorage.setItem('cart'+counter, manualName); 
                 localStorage.setItem('Price'+counter, val);                                      
                 localStorage.setItem('totalScanned', totalScanned);  
                 localStorage.setItem('taxRate', taxRate);  
                 localStorage.setItem('grandTotal', grandTotal);  
-                                   
+               if (counter == 0)   
+                  {
+                      counter+=1;                              
+                  }                                   
+                localStorage.setItem('counter', counter);              
              //Clearing and updating totals/values
                 document.getElementById('total').value =  (grandTotal).toFixed(2); 
                 document.getElementById('manName').value = "";
