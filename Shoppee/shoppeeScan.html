@@ -18,6 +18,14 @@
     </head>
 
     <body>
+        <div data-role="footer" data-theme="a" data-position="fixed">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="modeSelect.html">Mode Select</a></li>
+			<li><a href="shoppeeList.html">Grocery List</a></li>
+		</ul>
+	</div><!-- /navbar -->
+</div><!-- /footer --> 
         <H1 style="color:#B80000">Shoppee Mode</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -78,9 +86,10 @@
     			margin-left: -40px;
 			}
         </style>
-        <script>
+        <script type="text/javascript">
             
-        
+         //document.write( '<style>#footer{visibility:hidden}@media(min-height:' + ($( window ).height() - 10) + 'px){#footer{visibility:visible}}</style>' );
+
           
 
             var totalScanned = -0;
@@ -97,7 +106,7 @@
                                       totalScanned = -0
                                       counter = parseInt(localStorage.getItem('counter')*1);
                                       taxRate = parseFloat(localStorage.getItem('taxRate')*1);
-                                      $("#tax").val(taxRate.toFixed(0)*100);
+                                      $("#tax").val((taxRate*100).toFixed(0));
                                       
                                       var nm =""
                                       if (counter != 0)  
@@ -109,8 +118,8 @@
                                             
                                                 if (nm != "null" && nm != null)
                                                 {
-                                                    localStorage.removeItem(j);
-                                                    localStorage.setItem(ct, nm);
+                                                    localStorage.removeItem('cart'+j);
+                                                    localStorage.setItem('cart'+ct, nm);
                                                     localStorage.removeItem('Price'+j);
                                                     localStorage.setItem('Price'+ct, val);
                                                     grandTotal += (val + (taxRate*val))
@@ -121,10 +130,11 @@
                                                 }
                                                 else
                                                 {
-                                                    localStorage.removeItem(j); 
+                                                    localStorage.removeItem('cart'+j); 
                                                     localStorage.removeItem('Price'+j); 
                                                 }
                                            }
+                                            
                                             $("#total").val(grandTotal.toFixed(2));
                                                     
                                          if (ct == 0)
@@ -200,7 +210,8 @@
                     }
 
                 totalScanned = 0;
-                document.getElementById('total').value = ""; 
+                document.getElementById('total').value = "";
+                $("#tax").val("");                                    
                 $("#results").html("").add();
                 localStorage.setItem('totalScanned', 0);  
                 localStorage.setItem('taxRate', 0); 
@@ -248,11 +259,10 @@
             }
             
             function deleteItem(value, counter)
-            {
-                                                    
+            {                                
                 var split = (value).split("$");
                 price = split[1];
-                taxrate = localStorate.getItem('taxRate');
+                taxrate = localStorage.getItem('taxRate');
                 subtract = parseFloat(price * 1  + ( 1 * taxrate * price * 1)).toFixed(2);
                 totalScanned -= price;
                 grandTotal = parseFloat(document.getElementById('total').value);
@@ -262,6 +272,7 @@
                                                     
                //Updates local Storage    
                 localStorage.removeItem('cart'+counter);
+                localStorage.removeItem('Price'+counter)                                    
                 localStorage.setItem('taxrate', taxrate);                                    
                 localStorage.setItem('totalScanned', totalScanned);                                   
                 localStorage.setItem('grandTotal', grandTotal);
@@ -297,7 +308,6 @@
                                         if (data != "")
                                         {
                                             counter = parseInt(localStorage.getItem('counter')*1);
-                                            alert(counter);
                                             grandTotal = document.getElementById('total').value;
                                             $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+data[0].name +" $"+ data[0].price+"</a></li>");
                                             $('#results').listview('refresh');
@@ -313,8 +323,6 @@
                                             counter+=1;
                                             localStorage.setItem('counter', counter);
                                             localStorage.setItem('taxRate', taxRate);
-                                          
-                                         
                                         }
                                         else
                                             alert("Product not found, please use manual options to enter item.");
@@ -336,13 +344,6 @@
             
                    
         </script>
-         <div data-role="footer" data-theme="a" data-position="fixed">
-	<div data-role="navbar">
-		<ul>
-			<li><a href="modeSelect.html">Mode Select</a></li>
-			<li><a href="shoppeeList.html">Grocery List</a></li>
-		</ul>
-	</div><!-- /navbar -->
-</div><!-- /footer --> 
+         
     </body>
 </html>
