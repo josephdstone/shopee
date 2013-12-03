@@ -190,6 +190,13 @@
             
             function clearShoppeeCart()
             {
+               counter =  parseInt(localStorage.getItem('counter')*1);
+               for (var z = 0; z < counter+1; z++)  
+                    {
+                        localStorage.removeItem('Price'+z);
+                        localStorage.removeItem('cart'+z); 
+                    }
+
                 totalScanned = 0;
                 document.getElementById('total').value = ""; 
                 $("#results").html("").add();
@@ -201,6 +208,7 @@
                 taxRate = 0;
                 grandTotal = 0;
             	counter = 0;
+                            
             }
                                                         
             function manAdd()
