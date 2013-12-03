@@ -137,7 +137,7 @@
                                           else
                                             {
                                                 counter = ct;
-                                                localStorage.setItem('counter', ct);        
+                                                localStorage.setItem('counter', counter);        
                                             }
                                       }
             
@@ -217,11 +217,7 @@
             {
             if (document.getElementById('manPrice').value != "")
             {   
-                counter = parseInt(localStorage.getItem('counter')*1);
-               if (counter != 0) 
-               { 
-                counter += 1;
-               }                                    
+                counter = parseInt(localStorage.getItem('counter')*1);                                 
                 grandTotal = document.getElementById('total').value;
                 var manualName = document.getElementById('manName').value.replace(/[^a-zA-Z0-9]/g,' ');
                 var val = document.getElementById('manPrice').value;
@@ -237,10 +233,8 @@
                 localStorage.setItem('totalScanned', totalScanned);  
                 localStorage.setItem('taxRate', taxRate);  
                 localStorage.setItem('grandTotal', grandTotal);  
-               if (counter == 0)   
-                  {
-                      counter+=1;                              
-                  }                                   
+                  counter+=1;
+                                 
                 localStorage.setItem('counter', counter);              
              //Clearing and updating totals/values
                 document.getElementById('total').value =  (grandTotal).toFixed(2); 
@@ -303,29 +297,8 @@
                                         if (data != "")
                                         {
                                             counter = parseInt(localStorage.getItem('counter')*1);
-                                         if (counter != 0)
-                                          {         
-                                            counter += 1;
                                             alert(counter);
-                                            
                                             grandTotal = document.getElementById('total').value;
-                                            $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+data[0].name +" $"+ data[0].price+"</a></li>");
-                                            $('#results').listview('refresh');
-                                            totalScanned += parseFloat(data[0].price);
-                                            taxRate = document.getElementById('tax').value * .01;
-                                            grandTotal = totalScanned + (taxRate * totalScanned);
-                                            document.getElementById('total').value =  (grandTotal).toFixed(2); 
-                                            
-                                            //set local storage
-                                            localStorage.setItem('Price'+counter, data[0].price);
-                                            localStorage.setItem('cart'+counter, data[0].name);
-                                            localStorage.setItem('grandTotal', grandTotal);
-                                            localStorage.setItem('counter', counter);
-                                            localStorage.setItem('taxRate', taxRate);
-                                          }
-                                          else
-                                          {
-                                              grandTotal = document.getElementById('total').value;
                                             $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+data[0].name +" $"+ data[0].price+"</a></li>");
                                             $('#results').listview('refresh');
                                             totalScanned += parseFloat(data[0].price);
@@ -340,7 +313,7 @@
                                             counter+=1;
                                             localStorage.setItem('counter', counter);
                                             localStorage.setItem('taxRate', taxRate);
-                                          }
+                                          
                                          
                                         }
                                         else
