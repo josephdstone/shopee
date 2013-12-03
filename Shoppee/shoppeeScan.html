@@ -116,6 +116,7 @@
                                                     grandTotal += (val + (taxRate*val))
                                                     totalScanned += val;
                                                     $("#results").append("<li data-icon='minus' id="+ct+" onclick='deleteItem($(a"+ct+").text(), "+ct+");'><a style='color:white' id='a"+ct+"'>"+nm +" $"+ val+"</a></li>");
+                                                    $("#results").listview("refresh");
                                                     ct+=1;
                                                 }
                                                 else
@@ -295,8 +296,8 @@
                                         if (data != "")
                                         {
                                             counter = parseInt(localStorage.getItem('counter')*1);
-                                         if (counter != 0)
-                                          {
+                                        
+                                            alert(counter);
                                             counter += 1;
                                             grandTotal = document.getElementById('total').value;
                                             $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+data[0].name +" $"+ data[0].price+"</a></li>");
@@ -312,26 +313,8 @@
                                             localStorage.setItem('grandTotal', grandTotal);
                                             localStorage.setItem('counter', counter);
                                             localStorage.setItem('taxRate', taxRate);
-                                          }
-                                         else
-                                          {
-                                               
-                                            grandTotal = document.getElementById('total').value;
-                                            $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+data[0].name +" $"+ data[0].price+"</a></li>");
-                                            $('#results').listview('refresh');
-                                            totalScanned += parseFloat(data[0].price);
-                                            taxRate = document.getElementById('tax').value * .01;
-                                            grandTotal = totalScanned + (taxRate * totalScanned);
-                                            document.getElementById('total').value =  (grandTotal).toFixed(2); 
-                                            
-                                            //set local storage
-                                            localStorage.setItem('Price'+counter, data[0].price);
-                                            localStorage.setItem('cart'+counter, data[0].name);
-                                            localStorage.setItem('grandTotal', grandTotal);
-                                            localStorage.setItem('counter', counter);
-                                            localStorage.setItem('taxRate', taxRate); 
-                                            counter += 1;
-                                          }
+                                          
+                                         
                                         }
                                         else
                                             alert("Product not found, please use manual options to enter item.");
