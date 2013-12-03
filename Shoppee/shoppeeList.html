@@ -267,15 +267,13 @@
                                     {
                                         if (data != "")
                                         {
-                                        var itemName = data.item_name.replace(/[^a-zA-Z0-9]/g,' ');
-                                        
-                                        counter = parseInt(localStorage.getItem('listCounter')*1);
-                                        counter += 1;
-                                        localStorage.setItem('listCounter', counter);
-                                        localStorage.setItem(counter, itemName);
-                                        $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+itemName+"</a></li>");
-                                        $('#results').listview('refresh'); 
-                                            
+                                            var itemName = data.item_name.replace(/[^a-zA-Z0-9]/g,' ');
+                                            counter = parseInt(localStorage.getItem('listCounter')*1);
+                                            counter += 1;
+                                            localStorage.setItem('listCounter', counter);
+                                            localStorage.setItem(counter, itemName);
+                                            $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+itemName+"</a></li>");
+                                            $('#results').listview('refresh'); 
                                         }
                                         else
                                         alert("Item not found, please use Manual Options to add to your Shoppee List.");
