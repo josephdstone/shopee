@@ -145,8 +145,8 @@
                                 grocItem = localStorage.getItem(i);
                                 if (grocItem != null)
                                 {
-                                    localStorage.removeItem(i);
-                                    localStorage.setItem(count, grocItem);
+                                    localStorage.removeItem('list'+i);
+                                    localStorage.setItem('list'+count, grocItem);
                                     $("#results").append("<li data-icon='minus' id="+count+" onclick='deleteItem("+count+")', "+count+");'><a style='color:white' id='a"+count+"'>"+grocItem+"</a></li>");
                                     count +=1;
                                 }
@@ -210,7 +210,7 @@
                 counter += 1;
                 var itemID = counter;
                 localStorage.setItem('listCounter', counter);
-                localStorage.setItem(itemID, name);
+                localStorage.setItem('list'+itemID, name);
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+name+"</a></li>");                         
                 $('#results').listview('refresh'); 
             }
@@ -219,27 +219,18 @@
             {
                 
                 $("#" + id).remove();
-                localStorage.removeItem(id);
+                localStorage.removeItem('list'+id);
                 
             }
             function manualAdd()
             {
             if ($("#groceryItem").val() != "")
                {                                        
-                  var strcounter = localStorage.getItem('listCounter');                                     
-                  
-                                                    
-               if (strcounter != "")
-                {                                                                      
-                  counter = parseInt(strcounter);
-                }        
-                counter += 1;                                    
-                //parseInt(counter) += 1;                                                                        
+                counter = parseInt(localStorage.getItem('listCounter')*1);                                     
+                counter += 1;                                                                                                         
                 var grocery = $("#groceryItem").val().replace(/[^a-zA-Z0-9]/g,' ');
                 localStorage.setItem('listCounter', counter);
-                localStorage.setItem(counter, grocery);
-                                    alert(localStorage.getItem(itemID));
-                                    alert(itemID);
+                localStorage.setItem('list'+counter, grocery);
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+grocery+"</a></li>");
                 $('#results').listview('refresh');
                 $("#groceryItem").val("");                                    
@@ -271,7 +262,7 @@
                                             counter = parseInt(localStorage.getItem('listCounter')*1);
                                             counter += 1;
                                             localStorage.setItem('listCounter', counter);
-                                            localStorage.setItem(counter, itemName);
+                                            localStorage.setItem('list'+counter, itemName);
                                             $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+itemName+"</a></li>");
                                             $('#results').listview('refresh'); 
                                         }
