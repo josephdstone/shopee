@@ -295,6 +295,8 @@
                                             document.getElementById('total').value =  (grandTotal).toFixed(2); 
                                             
                                             //set local storage
+                                            localStorage.setItem('Price'+counter, data[0].price);
+                                            localStorage.setItem('cart'+counter, data[0].name);
                                             localStorage.setItem('grandTotal', grandTotal);
                                             localStorage.setItem('counter', counter);
                                             localStorage.setItem('taxRate', taxRate);
