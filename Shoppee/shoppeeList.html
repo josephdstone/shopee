@@ -39,14 +39,14 @@
         
         <br>
         <br>
-        <a style="margin-right:5%;margin-left:5%;" data-role="button" data-icon="plus" data-iconpos="right" id="btnScan" data-theme="b">Scan Product</a>
+        <a style="margin-right:5%;margin-left:5%;" data-role="button" data-icon="plus" data-iconpos="right" id="btnScan" data-theme="a">Scan Product</a>
 
         <a style="margin-right:5%;margin-left:5%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
-           data-icon="delete" data-iconpos="right" data-theme="b">
+           data-icon="delete" data-iconpos="right" data-theme="a">
             Clear Shopping List
         </a>
         <br>
-        <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="b" data-content-theme="b">
+        <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="a" data-content-theme="a">
            <h3>Manual Options</h3>
             <p>
                     
@@ -54,27 +54,27 @@
             <input style="text-align:center" id="groceryItem" value="" data-mini="false" type="text">
             <br>
         <a style="margin-right:5%;margin-left:5%;" id="btnAddGrocery" data-role="button" onClick="manualAdd()"
-           data-icon="plus" data-iconpos="right" data-theme="b">
+           data-icon="plus" data-iconpos="right" data-theme="a">
             Add Item
         </a>
                     </p>
             </div>
         
-    <ul style="margin-left:-25px; padding-right:25px; width:90%" data-theme="b" data-role="collapsible">
-	<h3 style="text-align:center;" data-theme="b">Recipe Search</h3>
+    <ul style="margin-left:-25px; padding-right:25px; width:90%" data-theme="a" data-role="collapsible">
+	<h3 style="text-align:center;" data-theme="a">Recipe Search</h3>
 	<p>
             <input style="text-align:center" id="recipeSearch" placeholder="Enter Dish" data-mini="false" type="text">
             <br>
         <a style="margin-right:5%;margin-left:5%;" id="btnAddGrocery" data-role="button" onClick="ajaxRecipeSearch()"
-           data-icon="search" data-iconpos="right" data-theme="b">
+           data-icon="search" data-iconpos="right" data-theme="a">
             Search Recipes
         </a>
-        <ul style="margin-left:-52px; width:110%" data-theme="b" data-role="collapsible">
-	<h3 style="text-align:center;" data-theme="b">Recipe Results</h3>
+        <ul style="margin-left:-52px; width:110%" data-theme="a" data-role="collapsible">
+	<h3 style="text-align:center;" data-theme="a">Recipe Results</h3>
 	<p>
         <ul style="width:110%"data-role="listview">
-            <ui id="recipeList" data-role="listview" data-inset="true" data-theme="b"></ui> 
-            <li data-inset="true" data-role="listview" data-theme="b" id="ingredientList"></li>
+            <ui id="recipeList" data-role="listview" data-inset="true" data-theme="a"></ui> 
+            <li data-inset="true" data-role="listview" data-theme="a" id="ingredientList"></li>
     </ul>
     </p>
 	</ul>
@@ -84,7 +84,7 @@
         <br>
         <h3>Shoppee List</h3>
         <ul style="margin-left:0px;" data-role="listview">
-            <li id="results" data-role="listview" data-theme="b"></li>
+            <li id="results" data-role="listview" data-theme="a"></li>
 	    </ul>
         
         <style>
@@ -135,13 +135,7 @@
             window.onload = populateList();
             function populateList()
             {
-                      for (var u = 0; u < 1000; u++)
-                      {
-                          localStorage.removeItem('cart'+u);
-                          localStorage.removeItem('Price'+u);
-                          localStorage.removeItem('list'+u);
-                          localStorage.removeItem(u);
-                      }
+
               counter = localStorage.getItem('listCounter')*1;
               var count = -0;
                 if (counter != null && counter != 0)
