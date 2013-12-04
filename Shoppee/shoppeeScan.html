@@ -169,7 +169,7 @@
                                                 grocItem = localStorage.getItem('list'+i);
                                                 if (grocItem != null)
                                                 {
-                                                    localStorage.removeItem(i);
+                                                    localStorage.removeItem('list'+i);
                                                     localStorage.setItem('list'+count, grocItem);
                                                     $("#shoppingList").append("<li data-icon='minus' id="+count+" onclick='deleteListItem("+count+")', "+count+");'><a style='color:white' id='a"+count+"'>"+grocItem+"</a></li>");
                                                     count +=1;
@@ -216,6 +216,11 @@
                 taxRate = 0;
                 grandTotal = 0;
             	counter = 0;
+            for (var u = 0; u < 1000; u++)
+                      {
+                          localStorage.removeItem('cart'+u);
+                          localStorage.removeItem('Price'+u);
+                      }
                             
             }
                                                         
@@ -283,7 +288,7 @@
             function deleteListItem(id)
             {
                  $("#" + id).remove();   
-                 localStorage.removeItem(id);                                   
+                 localStorage.removeItem("list"+id);                                   
             }
                 
             $("#btnScan").click(function () 

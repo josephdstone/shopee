@@ -135,6 +135,13 @@
             window.onload = populateList();
             function populateList()
             {
+                      for (var u = 0; u < 1000; u++)
+                      {
+                          localStorage.removeItem('cart'+u);
+                          localStorage.removeItem('Price'+u);
+                          localStorage.removeItem('list'+u);
+                          localStorage.removeItem(u);
+                      }
               counter = localStorage.getItem('listCounter')*1;
               var count = -0;
                 if (counter != null && counter != 0)
@@ -142,7 +149,7 @@
                         for (var i = 0; i < counter; i++) 
                             {
                                 var grocItem = ""
-                                grocItem = localStorage.getItem(i);
+                                grocItem = localStorage.getItem("list"+i);
                                 if (grocItem != null)
                                 {
                                     localStorage.removeItem('list'+i);
@@ -200,7 +207,11 @@
             {
                 $("#results").html("").add();
             	counter = 0;
-                localStorage.setItem('listCounter', counter);                                    
+                localStorage.setItem('listCounter', counter); 
+                for (var u = 0; u < 1000; u++)
+                      {
+                          localStorage.removeItem('list'+u);
+                      }
             }
                      
             function addIngredient(name, int)
