@@ -94,7 +94,7 @@
 	</ul>    
 	        
         <br>
-        <h3>Shoppee List</h3>
+        <h3 style="color:#B80000;">Shoppee List</h3>
         <ul style="margin-left:0px;" data-role="listview">
             <li id="results" data-role="listview" data-theme="a"></li>
 	    </ul>
@@ -234,7 +234,7 @@
             }
             function addIngredient(name, int)
             { 
-                //$("#anchor"+int).css('color','yellow');
+                $("#btnAddAll").hide();
                 counter = parseInt(localStorage.getItem('listCounter')*1);                     
                 counter += 1;
                 var itemID = counter;
