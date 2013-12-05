@@ -31,7 +31,7 @@
             <li style="align:center" id="ingredientList" data-role="listview" data-theme="a"></li>
             <a style="margin-right:5%;margin-left:5%;" id="btnAddAll" data-role="button" onClick="addAllIngredients()" href=""
            data-icon="plus" data-iconpos="right" data-theme="a">
-            Add All
+            Add All Ingredients
         </a>
 	    </ul>
         
@@ -40,10 +40,6 @@
 	<div data-role="navbar">
 		<ul>
 			<li><a href="modeSelect.html">Mode Select</a></li>
-            <a style="margin-right:5%;margin-left:5%;" id="btnAddAll" data-role="button" onClick="clearShoppeeList()" href=""
-           data-icon="plus" data-iconpos="right" data-theme="a">
-            Add All Ingredients
-        </a>
 		</ul>
 	</div><!-- /navbar -->
 </div><!-- /header --> 
@@ -133,17 +129,19 @@
             var counter = -0;
             var reccounter = -0;
             var ingcounter= -0;
-             
+            var ingredientCounter = 0
             function populatePanel(int)
             {
                 $("#ingredientList li").remove();
                 var length = arr[int].length;
+                
                 for (var k = 0; k < length; k++)
                   {
                     var ingl = arr[int][k];
                     var ing = "\""+arr[int][k]+"\"";
                     $("#ingredientList").append("<li id='ingredient"+k+"' data-icon='plus' onclick='addIngredient("+ing+", "+k+")', "+k+");'><a id='anchor"+k+"' style='color:white text-align:center;''>"+ingl+"</a></li>");
                     $('#ingredientList').listview('refresh'); 
+                    ingredientCounter += 1;
                   }
                 $("#ingredientPanel").panel( "open" );
             }
@@ -227,11 +225,12 @@
                       }
             }
                  
-            function addAllIngredients(name, int)
+            function addAllIngredients()
             {
-                for (var i = 0; i < count+1; i++)  
+                      alert(ingredientCounter);
+                for (var i = 0; i < ingredientCounter; i++)  
                       {
-                          addIngredient(name, int);
+                          addIngredient($("#anchor"+i).text(), i);
                       }
             }
             function addIngredient(name, int)
@@ -245,6 +244,7 @@
                 $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem("+counter+")', "+counter+");'><a style='color:white' id='a"+counter+"'>"+name+"</a></li>");                         
                 $('#results').listview('refresh');
                 $('#ingredient'+int).remove();
+                
             }
                                         
             function deleteItem(id)
