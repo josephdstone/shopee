@@ -42,10 +42,20 @@
             <label>Shoppee Cart Total</label>
             <input style="text-align:center;"  id="total" value="" type="number" data-mini="false" readonly>
         <br>
-        <div data-position-to="window" data-theme='a' data-role="popup" id="noProductFound">
+        <div data-transition="flow" data-position-to="window" data-theme='a' data-role="popup" id="noProductFound">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	    <p>Product Not Found in Database, Please Use Manual Mode to Enter Item.<p>
         </div>
+            <div data-transition="flow"  data-theme='a' data-role="popup" id="listCleared">
+                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+	    <p>Shopping Cart Cleared.<p>
+        </div>
+             <div data-transition="flow"  data-theme='b' data-role="popup" id="manError">
+                 <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+	    <p>Please Enter Product Price.<p>
+            </div>
         <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="a" data-content-theme="a">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
             	<h3>Manual Options</h3>
                 
 				<p>
@@ -228,6 +238,8 @@
                 taxRate = 0;
                 grandTotal = 0;
             	counter = 0;
+                $("#listCleared").popup("open");
+                $('#listCleared').css({right:'0px'});
             for (var u = 0; u < 1000; u++)
                       {
                           localStorage.removeItem('cart'+u);
@@ -267,7 +279,10 @@
                 val = -0;
              }
                 else
-                alert("Please Enter Item's Price.");
+            {
+                 $("#manError").popup("open");
+                $('#manError').css({right:'0px'});
+            }
             }
             
             function deleteItem(value, counter)
@@ -342,7 +357,7 @@
                                         else
                                         {
                                             $("#noProductFound").popup("open");
-                                            $('#noProductFound').css({position:'fixed',right:'0px'});
+                                            $('#noProductFound').css({right:'0px'});
                                         }
                                      
                                     },

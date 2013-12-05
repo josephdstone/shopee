@@ -32,10 +32,12 @@
             Add All Ingredients
         </a>
 	    </ul>
-<div data-theme='c' data-role="popup" id="addonePopup">
+<div data-transition="flow"  data-theme='c' data-role="popup" id="addonePopup">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	<p>Ingredient added to shopping list.<p>
 </div>
-<div data-theme='c' data-role="popup" id="addallPopup">
+<div data-transition="flow"  data-theme='c' data-role="popup" id="addallPopup">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	<p>All ingredients added to shopping list.<p>
 </div>
      </div><!-- /panel -->
@@ -74,14 +76,29 @@
                     </p>
             </div>
         
- <div data-theme='b' data-role="popup" id="recipeSearchingPopup">
+ <div data-transition="flow"  data-theme='a' data-role="popup" id="recipeSearchingPopup">
+     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	<p>Searching for Dish, Please Wait...<p>
 </div>
-<div data-theme='b' data-role="popup" id="noRecipeFound">
+<div data-transition="flow"  data-theme='b' data-role="popup" id="noRecipeFound">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	<p>No Recipes Found, Please Try Again.<p>
 </div>
-<div data-theme='b' data-role="popup" id="noItemFound">
+<div data-transition="flow"  data-theme='a' data-role="popup" id="noItemFound">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	<p>No Items Found, Please Use Manual Options to Enter Item.<p>
+</div>
+<div data-transition="flow"  data-theme='a' data-role="popup" id="listCleared">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+	<p>Shopping List Cleared.<p>
+</div>
+<div data-transition="flow"  data-theme='b' data-role="popup" id="noDish">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+	<p>Please Enter a Dish.<p>
+</div>
+<div data-transition="flow"  data-theme='b' data-role="popup" id="noItem">
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+	<p>Please Enter an Item to Add.<p>
 </div>
 
 
@@ -197,8 +214,9 @@
             {
              if ($("#recipeSearch").val() != "")
              {
+              $("#btnAddAll").show();
               $("#recipeSearchingPopup").popup('open');
-              $('#recipeSearching').css({position:'fixed',right:'0px'});
+              $('#recipeSearchingPopup').css({right:'0px'});
               setTimeout(closeIngPopup, 1500);
               setTimeout($( "#recResults" ).trigger( "expand" ), 2000)
               $.ajax({
@@ -225,6 +243,7 @@
                                                 }  
                                         
                                          }
+                                          
            
                                         $("#recipeSearch").val("");
                                     },
@@ -237,7 +256,8 @@
               }
               else
               {
-                 alert("Please Enter A Dish!");
+                 $("#noDish").popup("open");
+                 $('#noDish').css({right:'0px'});
               }
             }
                                         
@@ -250,6 +270,9 @@
                       {
                           localStorage.removeItem('list'+u);
                       }
+                $("#listCleared").popup("open");
+                $('#listCleared').css({right:'0px'});
+                //setTimeOut($("#listCleared").popup("close"), 3000);
             }
                  
             function addAllIngredients()
@@ -259,6 +282,7 @@
                           addIngredient($("#anchor"+i).text(), i);   
                       }
                       $('#addallPopup').popup("open");
+                      $('#addallPopup').css({right:'0px'});
                       setTimeout(closeIngPopup, 1500);
             }
                       
@@ -273,6 +297,7 @@
             {
                 addIngredient(name, int);
                 $('#addonePopup').popup("open");
+                $('#addonePopup').css({right:'0px'});
                 setTimeout(closeIngPopup, 2000); 
             }
             
@@ -312,7 +337,10 @@
                 
                 }
                    else 
-                   alert("Please enter an item.");
+                   {
+                       $("#noItem").popup("open");
+                       $('#noItem').css({right:'30px'}); 
+                   }
             }
             
             $("#btnScan").click(function () 
@@ -344,7 +372,7 @@
                                         else
                                         {
                                             $("#noItemFound").popup("open");
-                                            $('#noItemFound').css({position:'fixed',right:'0px'});
+                                            $('#noItemFound').css({right:'0px'});
                                             setTimeOut($("#noItemFound").popup("close"), 1500);
                                         }
                                 
@@ -353,7 +381,7 @@
                                 'error':function(data)
                                 {
                                     $("#noItemFound").popup("open");
-                                    $('#noItemFound').css({position:'fixed',right:'0px'});
+                                    $('#noItemFound').css({right:'0px'});
                                     setTimeOut($("#noItemFound").popup("close"), 1500);
                                 }
                                 
