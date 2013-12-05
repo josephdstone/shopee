@@ -11,7 +11,6 @@
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script src="jquery-mobile/js/jquery-1.9.1.min.js" type="text/javascript"></script>
         <script src="jquery-mobile/js/jquery.mobile-1.3.1.min.js" type="text/javascript"></script>
-        <script src="scripts/main.js" type="text/javascript"></script>
 
         <script src="scripts/login.js" type="text/javascript"></script>
         <script src="scripts/location.js" type="text/javascript"></script>
@@ -25,7 +24,7 @@
 			<li><a href="modeSelect.html">Mode Select</a></li>
 		</ul>
 	</div><!-- /navbar -->
-</div><!-- /header --> 
+</div><!-- /footer --> 
         <H1 style="color:#B80000">Shoppee Mode</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -126,7 +125,7 @@
                                                     localStorage.setItem('Price'+ct, val);
                                                     grandTotal += (val + (taxRate*val))
                                                     totalScanned += val;
-                                                    $("#results").append("<li data-icon='minus' id="+ct+" onclick='deleteItem($(a"+ct+").text(), "+ct+");'><a style='color:white' id='a"+ct+"'>"+nm +" $"+ val+"</a></li>");
+                                                    $("#results").append("<li data-icon='minus' id='productLI"+ct+"' onclick='deleteItem($(a"+ct+").text(), "+ct+");'><a style='color:white' id='a"+ct+"'>"+nm +" $"+ val+"</a></li>");
                                                     $("#results").listview("refresh");
                                                     ct+=1;
                                                 }
@@ -239,12 +238,12 @@
                 grandTotal = document.getElementById('total').value;
                 var manualName = document.getElementById('manName').value.replace(/[^a-zA-Z0-9]/g,' ');
                 var val = document.getElementById('manPrice').value;
-                $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+manualName +" $"+ val+"</a></li>");
+                $("#results").append("<li data-icon='minus' id='productLI"+counter+"' ><a onclick='deleteItem($(a"+counter+").text(), "+counter+");' style='color:white' id='a"+counter+"'>"+manualName +" $"+ val+"</a></li>");
                 $('#results').listview('refresh');
                 totalScanned += parseFloat(val);
                 taxRate = document.getElementById('tax').value * .01;
                 grandTotal = totalScanned + (taxRate * totalScanned);
-                                        alert(counter);            
+           
              //Adding values to local storage    
                 localStorage.setItem('cart'+counter, manualName); 
                 localStorage.setItem('Price'+counter, val);                                      
@@ -266,7 +265,8 @@
             }
             
             function deleteItem(value, counter)
-            {                                
+            {      
+                
                 var split = (value).split("$");
                 price = split[1];
                 taxrate = localStorage.getItem('taxRate');
@@ -275,7 +275,8 @@
                 grandTotal = parseFloat(document.getElementById('total').value);
                 grandTotal -= subtract;
                 document.getElementById('total').value = (grandTotal).toFixed(2);
-                $("#" + counter).remove();    
+                $("#productLI"+counter).remove(); 
+            
                                                     
                //Updates local Storage    
                 localStorage.removeItem('cart'+counter);
@@ -316,7 +317,7 @@
                                         {
                                             counter = parseInt(localStorage.getItem('counter')*1);
                                             grandTotal = document.getElementById('total').value;
-                                            $("#results").append("<li data-icon='minus' id="+counter+" onclick='deleteItem($(a"+counter+").text(), "+counter+");'><a style='color:white' id='a"+counter+"'>"+data[0].name +" $"+ data[0].price+"</a></li>");
+                                            $("#results").append("<li data-icon='minus' id='productLI"+counter+"' ><a style='color:white' id='a"+counter+"'onclick='deleteItem($(a"+counter+").text(), "+counter+");'>"+data[0].name +" $"+ data[0].price+"</a></li>");
                                             $('#results').listview('refresh');
                                             totalScanned += parseFloat(data[0].price);
                                             taxRate = document.getElementById('tax').value * .01;
