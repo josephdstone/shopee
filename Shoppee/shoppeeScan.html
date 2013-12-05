@@ -17,11 +17,11 @@
         <title>Scan Your Item</title>
     </head>
 
-    <body>
+    <body id='scanBody'>
         <div data-role="header" data-theme="a" data-position="fixed">
 	<div data-role="navbar">
 		<ul>
-			<li><a href="modeSelect.html">Mode Select</a></li>
+			<li><a  data-rel='dialog' data-transition="flip" href="modeSelectModal.html">Mode Select</a></li>
 		</ul>
 	</div><!-- /navbar -->
 </div><!-- /footer --> 
@@ -42,6 +42,9 @@
             <label>Shoppee Cart Total</label>
             <input style="text-align:center;"  id="total" value="" type="number" data-mini="false" readonly>
         <br>
+        <div data-position-to="window" data-theme='a' data-role="popup" id="noProductFound">
+	    <p>Product Not Found in Database, Please Use Manual Mode to Enter Item.<p>
+        </div>
         <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="a" data-content-theme="a">
             	<h3>Manual Options</h3>
                 
@@ -100,7 +103,7 @@
         
             
            setTimeout(function() 
-            {
+            {                         
                                       var ct = -0;
                                       grandTotal = -0;
                                       totalScanned = -0
@@ -144,6 +147,7 @@
                                                 localStorage.setItem('grandTotal', 0); 
                                                 localStorage.setItem('taxRate', 0);
                                                 localStorage.setItem('totalScanned', 0);
+                                                clearShoppeeCart();
                                             }
                                           else
                                             {
@@ -151,6 +155,7 @@
                                                 localStorage.setItem('counter', counter);        
                                             }
                                       }
+                                       
             
             
             },1000);
@@ -164,7 +169,7 @@
             });
             function populateList()
                                 {
-                                      
+
                                       var listCounter = localStorage.getItem('listCounter')*1;
                                       var count = 0;
                                         if (listCounter != null || listCounter != 0)
@@ -187,6 +192,7 @@
                                         }
                                         else
                                         {
+                                            
                                             $("#shoppingList").html("Shopping List Empty");
                                         }
                                      if (count == 0)
@@ -298,6 +304,7 @@
                  $("#" + id).remove();   
                  localStorage.removeItem("list"+id);                                   
             }
+            
 
             $("#btnScan").click(function () 
                 {          
@@ -333,7 +340,10 @@
                                             localStorage.setItem('taxRate', taxRate);
                                         }
                                         else
-                                            alert("Product not found, please use manual options to enter item.");
+                                        {
+                                            $("#noProductFound").popup("open");
+                                            $('#noProductFound').css({position:'fixed',right:'0px'});
+                                        }
                                      
                                     },
                                 'error':function(data)
