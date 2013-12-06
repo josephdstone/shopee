@@ -32,11 +32,11 @@
             Add All Ingredients
         </a>
 	    </ul>
-<div data-transition="flow"  data-theme='c' data-role="popup" id="addonePopup">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="addonePopup">
 
 	<p>Ingredient added to shopping list.<p>
 </div>
-<div data-transition="flow"  data-theme='c' data-role="popup" id="addallPopup">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="addallPopup">
 
 	<p>All ingredients added to shopping list.<p>
 </div>
@@ -50,13 +50,7 @@
         
         <br>
         <br>
-        <a style="margin-right:5%;margin-left:5%;" data-role="button" data-icon="plus" data-iconpos="right" id="btnScan" data-theme="a">Scan Product</a>
 
-        <a style="margin-right:5%;margin-left:5%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeList()" href=""
-           data-icon="delete" data-iconpos="right" data-theme="a">
-            Clear Shopping List
-        </a>
-        <br>
         <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="a" data-content-theme="a">
            <h3>Manual Options</h3>
             <p>        
@@ -70,27 +64,27 @@
                     </p>
             </div>
         
- <div data-transition="flow"  data-theme='a' data-role="popup" id="recipeSearchingPopup">
+ <div data-transition="flow"  data-theme='e' data-role="popup" id="recipeSearchingPopup">
 
 	<p>Searching for Dish, Please Wait...<p>
 </div>
-<div data-transition="flow"  data-theme='b' data-role="popup" id="noRecipeFound">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="noRecipeFound">
 
 	<p>No Recipes Found, Please Try Again.<p>
 </div>
-<div data-transition="flow"  data-theme='a' data-role="popup" id="noItemFound">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="noItemFound">
 
 	<p>No Items Found, Please Use Manual Options to Enter Item.<p>
 </div>
-<div data-transition="flow"  data-theme='a' data-role="popup" id="listCleared">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="listCleared">
 
 	<p>Shopping List Cleared.<p>
 </div>
-<div data-transition="flow"  data-theme='b' data-role="popup" id="noDish">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="noDish">
 
 	<p>Please Enter a Dish.<p>
 </div>
-<div data-transition="flow"  data-theme='b' data-role="popup" id="noItem">
+<div data-transition="flow"  data-theme='e' data-role="popup" id="noItem">
 
 	<p>Please Enter an Item to Add.<p>
 </div>
@@ -148,8 +142,17 @@
                 border-bottom-left-radius: 0;
                 border-width:0;
             }
+            
+          
         </style>
         <script>
+            $('#btnDeleteList').mouseup(function(){
+      $('#btnDeleteList').removeClass('ui-btn-active');
+    });
+            $('#btnScan').mouseup(function(){
+      $('#btnScan').removeClass('ui-btn-active');
+    });
+             
             var counter = -0;
             var reccounter = -0;
             var ingcounter= -0;
@@ -169,6 +172,7 @@
                   }
                 $("#ingredientPanel").panel( "open" );
                 $("#recipeList").html("").add();
+               
                 $( "#recResults" ).trigger( "collapse" );
             }
             
@@ -266,7 +270,7 @@
                       }
                 $("#listCleared").popup("open");
                 $('#listCleared').css({right:'0px'});
-                //setTimeOut($("#listCleared").popup("close"), 3000);
+                setTimeout(closeIngPopup, 1500);
             }
                  
             function addAllIngredients()
@@ -278,6 +282,7 @@
                       $('#addallPopup').popup("open");
                       $('#addallPopup').css({right:'0px'});
                       setTimeout(closeIngPopup, 1500);
+                      $("#ingredientPanel").panel( "close" );
             }
                       
             function closeIngPopup() 
@@ -285,14 +290,18 @@
                 $('#addallPopup').popup("close");
                 $('#addonePopup').popup("close");
                 $("#recipeSearchingPopup").popup('close');
+                $("#listCleared").popup("close");
+                
             }
+                      
+           
             
             function singleIngPopup(name, int)
             {
                 addIngredient(name, int);
                 $('#addonePopup').popup("open");
                 $('#addonePopup').css({right:'0px'});
-                setTimeout(closeIngPopup, 2000); 
+                setTimeout(closeIngPopup, 1000); 
             }
             
             function addIngredient(name, int)
@@ -393,18 +402,18 @@
     
     
         </div>
-        <div data-role="footer">		
-	
-</div><!-- /footer -->
+        
       <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
-                <span class="footerText">Recipe Search Powered by Yummly&trade;</span>
-            </div>
-        <div  data-iconpos="top" data-role="navbar">
+          <div  data-iconpos="top" data-role="navbar">
 		<ul>
-			<li><a data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
-			<li><a onclick='clearShoppeeList()'>Clear List</a></li>
+			<li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
+            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
+			<li><a id='btnDeleteList' data-icon='delete' onclick='clearShoppeeList()'>Clear List</a></li>
 		</ul>
 	</div><!-- /navbar -->
+                <span class="footerText">Recipe Search Powered by Yummly&trade;</span>
+            </div>
+        
    </div>
         
      

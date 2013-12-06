@@ -18,23 +18,14 @@
     </head>
 
     <body id='scanBody'>
-        <div data-role="header" data-theme="a" data-position="fixed">
-	<div data-role="navbar">
-		<ul>
-			<li><a  data-rel='dialog' data-transition="flip" href="modeSelectModal.html">Mode Select</a></li>
-		</ul>
-	</div><!-- /navbar -->
-</div><!-- /footer --> 
+        
         <H1 style="color:#B80000">Shoppee Mode</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
         <br>
         <br>
-        <a style="margin-right:10%;margin-left:10%;" data-role="button" id="btnScan" data-iconpos="right" data-icon="plus" data-theme="a">Scan Product</a>
-        <a style="margin-right:10%;margin-left:10%;" id="btnClearTotal" data-role="button" onClick="clearShoppeeCart()" href=""
-           data-icon="delete" data-iconpos="right" data-theme="a">
-            Clear Cart
-        </a>
+
+
         
         <label>Tax Rate %</label>
             <input style="text-align:center;"  id="tax" value="" placeholder="Optional" type="number" data-mini="false">
@@ -42,20 +33,20 @@
             <label>Shoppee Cart Total</label>
             <input style="text-align:center;"  id="total" value="" type="number" data-mini="false" readonly>
         <br>
-        <div data-transition="flow" data-position-to="window" data-theme='a' data-role="popup" id="noProductFound">
-            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+        <div data-transition="flow" data-position-to="window" data-theme='e' data-role="popup" id="noProductFound">
+
 	    <p>Product Not Found in Database, Please Use Manual Mode to Enter Item.<p>
         </div>
-            <div data-transition="flow"  data-theme='a' data-role="popup" id="listCleared">
-                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            <div data-transition="flow"  data-theme='e' data-role="popup" id="listCleared">
+
 	    <p>Shopping Cart Cleared.<p>
         </div>
-             <div data-transition="flow"  data-theme='b' data-role="popup" id="manError">
-                 <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+             <div data-transition="flow"  data-theme='e' data-role="popup" id="manError">
+
 	    <p>Please Enter Product Price.<p>
             </div>
         <div style="margin-right:5%;margin-left:5%;" data-role="collapsible" data-theme="a" data-content-theme="a">
-            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
             	<h3>Manual Options</h3>
                 
 				<p>
@@ -102,7 +93,12 @@
             
          //document.write( '<style>#footer{visibility:hidden}@media(min-height:' + ($( window ).height() - 10) + 'px){#footer{visibility:visible}}</style>' );
 
-          
+          $('#btnClearTotal').mouseup(function(){
+      $('#btnClearTotal').removeClass('ui-btn-active');
+    });
+            $('#btnScan').mouseup(function(){
+      $('#btnScan').removeClass('ui-btn-active');
+    });
 
             var totalScanned = -0;
             var taxRate = -0;
@@ -240,6 +236,8 @@
             	counter = 0;
                 $("#listCleared").popup("open");
                 $('#listCleared').css({right:'0px'});
+                setTimeout(closePopups, 1500);
+                
             for (var u = 0; u < 1000; u++)
                       {
                           localStorage.removeItem('cart'+u);
@@ -247,7 +245,14 @@
                       }
                             
             }
-                                                        
+            
+            function closePopups()
+            {
+                $("#listCleared").popup('close');
+                $("#manError").popup('close');
+                $("#noProductFound").popup('close');
+            }
+            
             function manAdd()
             {
             if (document.getElementById('manPrice').value != "")
@@ -282,6 +287,7 @@
             {
                  $("#manError").popup("open");
                 $('#manError').css({right:'0px'});
+                setTimeout(closePopups, 1500);
             }
             }
             
@@ -358,6 +364,8 @@
                                         {
                                             $("#noProductFound").popup("open");
                                             $('#noProductFound').css({right:'0px'});
+                                             setTimeout(closePopups, 1500);
+                                         
                                         }
                                      
                                     },
@@ -377,6 +385,13 @@
             
                    
         </script>
-         
+         <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
+          <div  data-iconpos="top" data-role="navbar">
+		<ul>
+			<li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
+            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
+			<li><a id='btnClearTotal' data-icon='delete' onclick='clearShoppeeCart()'>Clear List</a></li>
+		</ul>
+	</div><!-- /navbar -->
     </body>
 </html>
