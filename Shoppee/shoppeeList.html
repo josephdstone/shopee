@@ -33,21 +33,15 @@
         </a>
 	    </ul>
 <div data-transition="flow"  data-theme='c' data-role="popup" id="addonePopup">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>Ingredient added to shopping list.<p>
 </div>
 <div data-transition="flow"  data-theme='c' data-role="popup" id="addallPopup">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>All ingredients added to shopping list.<p>
 </div>
      </div><!-- /panel -->
-    <div  data-role="header" data-theme="a" data-position="fixed">
-	<div data-role="navbar">
-		<ul>
-			<li><a data-rel="dialog" data-transition="flip" href="modeSelectModal.html">Mode Select</a></li>
-		</ul>
-	</div><!-- /navbar -->
-</div><!-- /header --> 
+   
 
     <div data-role="content">
         <H1 style="color:#B80000">Shoppee List</H1>
@@ -77,27 +71,27 @@
             </div>
         
  <div data-transition="flow"  data-theme='a' data-role="popup" id="recipeSearchingPopup">
-     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>Searching for Dish, Please Wait...<p>
 </div>
 <div data-transition="flow"  data-theme='b' data-role="popup" id="noRecipeFound">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>No Recipes Found, Please Try Again.<p>
 </div>
 <div data-transition="flow"  data-theme='a' data-role="popup" id="noItemFound">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>No Items Found, Please Use Manual Options to Enter Item.<p>
 </div>
 <div data-transition="flow"  data-theme='a' data-role="popup" id="listCleared">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>Shopping List Cleared.<p>
 </div>
 <div data-transition="flow"  data-theme='b' data-role="popup" id="noDish">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>Please Enter a Dish.<p>
 </div>
 <div data-transition="flow"  data-theme='b' data-role="popup" id="noItem">
-    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<p>Please Enter an Item to Add.<p>
 </div>
 
@@ -399,10 +393,20 @@
     
     
         </div>
+        <div data-role="footer">		
+	
+</div><!-- /footer -->
       <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
                 <span class="footerText">Recipe Search Powered by Yummly&trade;</span>
             </div>
+        <div  data-iconpos="top" data-role="navbar">
+		<ul>
+			<li><a data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
+			<li><a onclick='clearShoppeeList()'>Clear List</a></li>
+		</ul>
+	</div><!-- /navbar -->
    </div>
+        
      
     </body>
     
