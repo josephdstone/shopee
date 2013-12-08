@@ -23,7 +23,16 @@
     </head>
 
     <body id='scanBody'>
-        
+        <div data-role="header" style="overflow:hidden;">
+    <h1>Shoppee</h1>
+    <div data-role="navbar">
+        <ul>
+            <li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
+            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
+			<li><a id='btnClearShoppeeCart' data-icon='delete' onclick='clearShoppeeCart()'>Clear List</a></li>
+        </ul>
+    </div><!-- /navbar -->
+</div><!-- /header -->
         <H1 style="color:#B80000">Shoppee Mode</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -390,13 +399,6 @@
             
                    
         </script>
-         <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
-          <div  data-iconpos="top" data-role="navbar">
-		<ul>
-			<li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
-            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
-			<li><a id='btnClearTotal' data-icon='delete' onclick='clearShoppeeCart()'>Clear List</a></li>
-		</ul>
-	</div><!-- /navbar -->
+         
     </body>
 </html>

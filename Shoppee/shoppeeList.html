@@ -35,6 +35,10 @@
            data-icon="plus" data-iconpos="right" data-theme="a">
             Add All Ingredients
         </a>
+            <a style="margin-right:5%;margin-left:5%;" id="btnClosePanel" data-role="button" onClick="closePanel()" href=""
+           data-icon="plus" data-iconpos="right" data-theme="a">
+           Cancel
+        </a>
 	    </ul>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="addonePopup">
 
@@ -45,9 +49,19 @@
 	<p>All ingredients added to shopping list.<p>
 </div>
      </div><!-- /panel -->
-   
+   <div data-role="header" style="overflow:hidden;">
+    <h1>Shoppee</h1>
+    <div data-role="navbar">
+        <ul>
+            <li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
+            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
+			<li><a id='btnClearShoppeeList' data-icon='delete' onclick='clearShoppeeList()'>Clear List</a></li>
+        </ul>
+    </div><!-- /navbar -->
+</div><!-- /header -->
 
     <div data-role="content">
+        
         <H1 style="color:#B80000">Shoppee List</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -109,11 +123,12 @@
         <ul style="width:110%"data-role="listview">
             <ui id="recipeList" data-role="listview" data-inset="true" data-theme="a"></ui> 
             <li data-inset="true" data-role="listview" data-theme="a" id="ingredientList"></li>
-    </ul>
-    </p>
+            
+    	</ul>
+    
 	</ul>
-    </p>
-	</ul>    
+    
+	  
 	        
         <br>
         <h3 style="color:#B80000;">Shoppee List</h3>
@@ -150,6 +165,9 @@
           
         </style>
         <script>
+            $("#page-location-footer").removeClass("ui-footer");
+            
+            
             $('#btnDeleteList').mouseup(function(){
       $('#btnDeleteList').removeClass('ui-btn-active');
     });
@@ -157,7 +175,7 @@
       $('#btnScan').removeClass('ui-btn-active');
     });
              
-            var counter = -0;
+            var counter = -0;$
             var reccounter = -0;
             var ingcounter= -0;
             var ingredientCounter = 0
@@ -218,7 +236,7 @@
              {
               $("#btnAddAll").show();
               $("#recipeSearchingPopup").popup('open');
-              $('#recipeSearchingPopup').css({right:'0px'});
+              $('#recipeSearchingPopup').css({right:'40px'});
               setTimeout(closeIngPopup, 1500);
               setTimeout($( "#recResults" ).trigger( "expand" ), 2000)
               $.ajax({
@@ -259,7 +277,7 @@
               else
               {
                  $("#noDish").popup("open");
-                 $('#noDish').css({right:'0px'});
+                 $('#noDish').css({right:'40px'});
               }
             }
                                         
@@ -273,8 +291,13 @@
                           localStorage.removeItem('list'+u);
                       }
                 $("#listCleared").popup("open");
-                $('#listCleared').css({right:'0px'});
+                $('#listCleared').css({right:'20px'});
                 setTimeout(closeIngPopup, 1500);
+            }
+            
+            function closePanel()
+            {
+                $( "#ingredientPanel" ).panel( "close" );
             }
                  
             function addAllIngredients()
@@ -284,7 +307,7 @@
                           addIngredient($("#anchor"+i).text(), i);   
                       }
                       $('#addallPopup').popup("open");
-                      $('#addallPopup').css({right:'0px'});
+                      $('#addallPopup').css({right:'20px'});
                       setTimeout(closeIngPopup, 1500);
                       $("#ingredientPanel").panel( "close" );
             }
@@ -379,7 +402,7 @@
                                         else
                                         {
                                             $("#noItemFound").popup("open");
-                                            $('#noItemFound').css({right:'0px'});
+                                            $('#noItemFound').css({right:'20px'});
                                             setTimeOut($("#noItemFound").popup("close"), 1500);
                                         }
                                 
@@ -388,7 +411,7 @@
                                 'error':function(data)
                                 {
                                     $("#noItemFound").popup("open");
-                                    $('#noItemFound').css({right:'0px'});
+                                    $('#noItemFound').css({right:'20px'});
                                     setTimeOut($("#noItemFound").popup("close"), 1500);
                                 }
                                 
@@ -407,14 +430,7 @@
     
         </div>
         
-      <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
-          <div  data-iconpos="top" data-role="navbar">
-		<ul>
-			<li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
-            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
-			<li><a id='btnDeleteList' data-icon='delete' onclick='clearShoppeeList()'>Clear List</a></li>
-		</ul>
-	</div><!-- /navbar -->
+      
                 <span class="footerText">Recipe Search Powered by Yummly&trade;</span>
             </div>
         
