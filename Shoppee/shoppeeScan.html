@@ -82,6 +82,20 @@
           
         
         <style>
+            
+            [data-role=footer]
+            {
+                bottom:0;
+                right:0;
+                top:auto! important ;
+                position:absolute !important; 
+            } 
+        [data-role=header]
+            {
+                top:0; 
+                position:absolute !important; 
+                bottom: auto !important;
+            }
         ul
             {
                 
@@ -235,7 +249,7 @@
                 grandTotal = 0;
             	counter = 0;
                 $("#listCleared").popup("open");
-                $('#listCleared').css({right:'0px'});
+                $('#listCleared').css({right:'15px'});
                 setTimeout(closePopups, 1500);
                 
             for (var u = 0; u < 1000; u++)
@@ -286,7 +300,7 @@
                 else
             {
                  $("#manError").popup("open");
-                $('#manError').css({right:'0px'});
+                $('#manError').css({right:'20px'});
                 setTimeout(closePopups, 1500);
             }
             }
@@ -385,6 +399,7 @@
             
                    
         </script>
+           
          <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
           <div  data-iconpos="top" data-role="navbar">
 		<ul>
@@ -393,5 +408,6 @@
 			<li><a id='btnClearTotal' data-icon='delete' onclick='clearShoppeeCart()'>Clear List</a></li>
 		</ul>
 	</div><!-- /navbar -->
+            
     </body>
 </html>

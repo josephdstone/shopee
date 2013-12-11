@@ -36,18 +36,22 @@
             Exit
         </a>
 	    </ul>
+        
+        
 <div data-transition="flow"  data-theme='e' data-role="popup" id="addonePopup">
 
-	<p>Ingredient added to shopping list.<p>
+	<p>Ingredient added to shopping list.</p>
 </div>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="addallPopup">
 
-	<p>All ingredients added to shopping list.<p>
+	<p>All ingredients added to shopping list.</p>
 </div>
      </div><!-- /panel -->
+     
    
 
     <div data-role="content">
+        
         <H1 style="color:#B80000">Shoppee List</H1>
         <H4 style="color:#B80000">Scan Your Items</H4>
         <img style="width: 110px; height: 100px" src="styles/images/cart.ico">
@@ -70,27 +74,27 @@
         
  <div data-transition="flow"  data-theme='e' data-role="popup" id="recipeSearchingPopup">
 
-	<p>Searching for Dish, Please Wait...<p>
+	<p>Searching for Dish, Please Wait...</p>
 </div>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="noRecipeFound">
 
-	<p>No Recipes Found, Please Try Again.<p>
+	<p>No Recipes Found, Please Try Again.</p>
 </div>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="noItemFound">
 
-	<p>No Items Found, Please Use Manual Options to Enter Item.<p>
+	<p>No Items Found, Please Use Manual Options to Enter Item.</p>
 </div>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="listCleared">
 
-	<p>Shopping List Cleared.<p>
+	<p>Shopping List Cleared.</p>
 </div>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="noDish">
 
-	<p>Please Enter a Dish.<p>
+	<p>Please Enter a Dish.</p>
 </div>
 <div data-transition="flow"  data-theme='e' data-role="popup" id="noItem">
 
-	<p>Please Enter an Item to Add.<p>
+	<p>Please Enter an Item to Add.</p>
 </div>
 
 
@@ -122,6 +126,19 @@
 	    </ul>
         
         <style>
+        [data-role=footer]
+            {
+                bottom:0;
+                right:0;
+                top:auto! important ;
+                position:absolute !important; 
+            } 
+        [data-role=header]
+            {
+                top:0; 
+                position:absolute !important; 
+                bottom: auto !important;
+            }
         ul
             {
     			width: 100%;
@@ -150,6 +167,10 @@
           
         </style>
         <script>
+       
+
+            
+            
             $('#btnDeleteList').mouseup(function(){
       $('#btnDeleteList').removeClass('ui-btn-active');
     });
@@ -225,7 +246,7 @@
              {
               $("#btnAddAll").show();
               $("#recipeSearchingPopup").popup('open');
-              $('#recipeSearchingPopup').css({right:'0px'});
+              $('#recipeSearchingPopup').css({right:'40px'});
               setTimeout(closeIngPopup, 1500);
               setTimeout($( "#recResults" ).trigger( "expand" ), 2000)
               $.ajax({
@@ -267,6 +288,7 @@
               {
                  $("#noDish").popup("open");
                  $('#noDish').css({right:'0px'});
+                 setTimeout(closeIngPopup, 1500);
               }
             }
                                         
@@ -280,7 +302,7 @@
                           localStorage.removeItem('list'+u);
                       }
                 $("#listCleared").popup("open");
-                $('#listCleared').css({right:'0px'});
+                $('#listCleared').css({right:'10px'});
                 setTimeout(closeIngPopup, 1500);
             }
                  
@@ -291,7 +313,7 @@
                           addIngredient($("#anchor"+i).text(), i);   
                       }
                       $('#addallPopup').popup("open");
-                      $('#addallPopup').css({right:'0px'});
+                      $('#addallPopup').css({right:'40px'});
                       setTimeout(closeIngPopup, 1500);
                       $("#ingredientPanel").panel( "close" );
             }
@@ -302,8 +324,11 @@
                 $('#addonePopup').popup("close");
                 $("#recipeSearchingPopup").popup('close');
                 $("#listCleared").popup("close");
+                $("#noDish").popup("close");
+                $("#noItem").popup("close");
                 
             }
+                      
                       
            
             
@@ -311,7 +336,7 @@
             {
                 addIngredient(name, int);
                 $('#addonePopup').popup("open");
-                $('#addonePopup').css({right:'0px'});
+                $('#addonePopup').css({right:'30px'});
                 setTimeout(closeIngPopup, 1000); 
             }
             
@@ -354,12 +379,12 @@
                    {
                        $("#noItem").popup("open");
                        $('#noItem').css({right:'30px'}); 
+                       setTimeout(closeIngPopup, 1500);
                    }
             }
             
             $("#btnScan").click(function () 
                 {          
-                 
                 window.plugins.barcodeScanner.scan(
                     function(result) 
                     {	
@@ -387,7 +412,7 @@
                                         {
                                             $("#noItemFound").popup("open");
                                             $('#noItemFound').css({right:'0px'});
-                                            setTimeOut($("#noItemFound").popup("close"), 1500);
+                                            setTimeout($("#noItemFound").popup("close"), 1500);
                                         }
                                 
                                         
@@ -396,7 +421,7 @@
                                 {
                                     $("#noItemFound").popup("open");
                                     $('#noItemFound').css({right:'0px'});
-                                    setTimeOut($("#noItemFound").popup("close"), 1500);
+                                    setTimeout($("#noItemFound").popup("close"), 1500);
                                 }
                                 
                                 
@@ -413,17 +438,17 @@
     
     
         </div>
-        
-      <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
-          <div  data-iconpos="top" data-role="navbar">
-		<ul>
-			<li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
-            <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
-			<li><a id='btnDeleteList' data-icon='delete' onclick='clearShoppeeList()'>Clear List</a></li>
-		</ul>
-	</div><!-- /navbar -->
+       <div id="page-location-footer" data-role="footer" data-position="fixed" data-id="oneFooter">
+          <div id="navigationBar"  data-iconpos="top" data-role="navbar">
+		     <ul>
+			      <li><a id='btnmodeSelect' data-transition='flip' data-icon='grid' href="modeSelectModal.html">Mode Select</a></li>
+                  <li><a id='btnScan' data-transition='flip' data-icon='search' >Scan Item</a></li>
+			      <li><a id='btnDeleteList' data-icon='delete' onclick='clearShoppeeList()'>Clear List</a></li>
+		     </ul>
+	      </div><!-- /navbar -->
                 <span class="footerText">Recipe Search Powered by Yummly&trade;</span>
-            </div>
+      </div>
+      
         
    </div>
         
